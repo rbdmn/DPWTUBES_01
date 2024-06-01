@@ -35,5 +35,5 @@ class Booking extends Model
     const STATUS_RETURNED = 'Returned';
     const STATUS_RETURNED_PENDING = 'ReturnedPending';
     const PAYMENT_UNPAID = 'Unpaid';
-    const PAYMENT_PAID = 'Paid';
+    const PAYMENT_PAID = 'Paid'; 
 }
