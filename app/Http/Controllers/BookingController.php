@@ -61,5 +61,16 @@ class BookingController extends Controller
 
         return redirect()->route('booking')->with('success', 'Item returned successfully!');
     }
+
+    public function requestReturn($id_booking)
+    {
+        $booking = Booking::find($id_booking);
+        if ($booking && $booking->status_submission == Booking::STATUS_CONFIRMED) {
+            $booking->status_submission = Booking::STATUS_RETURN_REQUESTED;
+            $booking->save();
+        }
+
+        return redirect()->route('booking')->with('success', 'Return requested successfully!');
+    }
 }
 ?>

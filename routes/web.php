@@ -50,11 +50,12 @@ Route::delete('/cart/delete/{id_keranjang}', [CartController::class, 'destroy'])
 Route::middleware(['auth'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('booking');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-    Route::post('/bookings/{id_booking}/pay', [BookingController::class, 'updatePaymentStatus'])->name('bookings.updatePaymentStatus');
-    Route::post('/bookings/return-item/{id_booking}', [BookingController::class, 'returnItem'])->name('bookings.returnItem');
+    Route::post('/bookings/update-payment-status/{id_booking}', [BookingController::class, 'updatePaymentStatus'])->name('bookings.updatePaymentStatus');
+    Route::post('/bookings/request-return/{id_booking}', [BookingController::class, 'requestReturn'])->name('bookings.requestReturn');
 });
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/admin/confirm/{id_booking}', [AdminController::class, 'confirmSubmission'])->name('admin.confirmSubmission');
+Route::post('/admin/bookings/confirm-return/{id_booking}', [AdminController::class, 'confirmReturn'])->name('admin.confirmReturn');
 
 require __DIR__.'/auth.php';

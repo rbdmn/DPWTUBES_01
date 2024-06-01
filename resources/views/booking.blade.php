@@ -57,10 +57,12 @@
                                                 <button type="submit" class="btn btn-primary btn-sm">Pay</button>
                                             </form>
                                         @elseif ($booking->status_submission == 'Confirmed')
-                                            <form action="{{ route('bookings.returnItem', $booking->id_booking) }}" method="POST">
+                                            <form action="{{ route('bookings.requestReturn', $booking->id_booking) }}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-warning btn-sm">Return</button>
                                             </form>
+                                        @elseif ($booking->status_submission == 'Return Requested')
+                                            <span class="text-info">Return Requested</span>
                                         @else
                                             <span class="text-success">Paid</span>
                                         @endif

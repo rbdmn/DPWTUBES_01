@@ -12,8 +12,12 @@ class AdminController extends Controller
     {
         $paidBookings = Booking::with('user')
             ->where('status_payment', Booking::PAYMENT_PAID)
-            ->where('status_submission', Booking::STATUS_PENDING)
+            ->whereIn('status_submission', [Booking::STATUS_PENDING, Booking::STATUS_RETURN_REQUESTED])
             ->get();
+        
+        // Debugging the retrieved data
+        // dd($paidBookings);
+
         return view('admin.index', compact('paidBookings'));
     }
 
@@ -26,6 +30,17 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin.index')->with('success', 'Submission confirmed successfully!');
+    }
+
+    public function confirmReturn($id_booking)
+    {
+        $booking = Booking::find($id_booking);
+        if ($booking && $booking->status_submission == Booking::STATUS_RETURN_REQUESTED) {
+            $booking->status_submission = Booking::STATUS_RETURNED;
+            $booking->save();
+        }
+
+        return redirect()->route('admin.index')->with('success', 'Return confirmed successfully!');
     }
 
     

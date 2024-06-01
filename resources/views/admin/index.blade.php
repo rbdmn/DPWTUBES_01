@@ -19,7 +19,7 @@
         <thead>
             <tr>
                 <th scope="col">No</th>
-                <th scope="col">Nama Pelanggan</th>
+                <th scope="col">User Name</th>
                 <th scope="col">Nama Barang</th>
                 <th scope="col">Total Harga</th>
                 <th scope="col">Status Submission</th>
@@ -37,10 +37,19 @@
                     <td>{{ $booking->status_submission }}</td>
                     <td>{{ $booking->status_payment }}</td>
                     <td>
-                        <form action="{{ route('admin.confirmSubmission', $booking->id_booking) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-success btn-sm">Serahkan Barang</button>
-                        </form>
+                        @if ($booking->status_submission == 'Pending')
+                            <form action="{{ route('admin.confirmSubmission', $booking->id_booking) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-sm">Serahkan Barang</button>
+                            </form>
+                        @elseif ($booking->status_submission == 'Return Requested')
+                            <form action="{{ route('admin.confirmReturn', $booking->id_booking) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-warning btn-sm">Confirm Return</button>
+                            </form>
+                        @else
+                            <span class="text-success">{{ $booking->status_submission }}</span>
+                        @endif
                     </td>
                 </tr>
             @endforeach
