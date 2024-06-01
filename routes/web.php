@@ -58,4 +58,8 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/admin/confirm/{id_booking}', [AdminController::class, 'confirmSubmission'])->name('admin.confirmSubmission');
 Route::post('/admin/bookings/confirm-return/{id_booking}', [AdminController::class, 'confirmReturn'])->name('admin.confirmReturn');
 
+Route::get('/bookings/invoice/submission/{id_booking}', [BookingController::class, 'generateSubmissionInvoice'])->name('bookings.generateSubmissionInvoice');
+Route::get('/bookings/invoice/return/{id_booking}', [BookingController::class, 'generateReturnInvoice'])->name('bookings.generateReturnInvoice');
+
+
 require __DIR__.'/auth.php';

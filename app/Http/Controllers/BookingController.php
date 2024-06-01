@@ -6,6 +6,9 @@ use App\Models\Keranjang;
 use App\Models\Booking;
 use App\Models\Barang;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+// use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BookingController extends Controller
 {
@@ -65,12 +68,34 @@ class BookingController extends Controller
     public function requestReturn($id_booking)
     {
         $booking = Booking::find($id_booking);
-        if ($booking && $booking->status_submission == Booking::STATUS_CONFIRMED) {
-            $booking->status_submission = Booking::STATUS_RETURN_REQUESTED;
+        if ($booking && $booking->status_submission == 'Confirmed') {
+            $booking->status_submission = 'Return Requested';
             $booking->save();
         }
 
         return redirect()->route('booking')->with('success', 'Return requested successfully!');
+    }
+
+    public function generateSubmissionInvoice($id_booking)
+    {
+        $booking = Booking::with('user')->find($id_booking);
+        if (!$booking) {
+            return redirect()->route('booking')->with('error', 'Booking not found.');
+        }
+
+        $pdf = PDF::loadView('invoices.submission', compact('booking'));
+        return $pdf->download('submission_invoice_' . $booking->id_booking . '.pdf');
+    }
+
+    public function generateReturnInvoice($id_booking)
+    {
+        $booking = Booking::with('user')->find($id_booking);
+        if (!$booking) {
+            return redirect()->route('booking')->with('error', 'Booking not found.');
+        }
+
+        $pdf = Pdf::loadView('invoices.return', compact('booking'));
+        return $pdf->download('return_invoice_' . $booking->id_booking . '.pdf');
     }
 }
 ?>

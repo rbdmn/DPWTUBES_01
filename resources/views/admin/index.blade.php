@@ -38,19 +38,22 @@
                     <td>{{ $booking->status_payment }}</td>
                     <td>
                         @if ($booking->status_submission == 'Pending')
-                            <form action="{{ route('admin.confirmSubmission', $booking->id_booking) }}" method="POST">
+                            <form action="{{ route('admin.confirmSubmission', $booking->id_booking) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 <button type="submit" class="btn btn-success btn-sm">Serahkan Barang</button>
                             </form>
+                            <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Submission Invoice</a>
                         @elseif ($booking->status_submission == 'Return Requested')
-                            <form action="{{ route('admin.confirmReturn', $booking->id_booking) }}" method="POST">
+                            <form action="{{ route('admin.confirmReturn', $booking->id_booking) }}" method="POST" style="display:inline-block;">
                                 @csrf
-                                <button type="submit" class="btn btn-warning btn-sm">Confirm Return</button>
+                                <button type="submit" class="btn btn-success btn-sm">Confirm Return</button>
                             </form>
+                            <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Return Invoice</a>
                         @else
-                            <span class="text-success">{{ $booking->status_submission }}</span>
+                            <span class="text-success">Confirmed</span>
                         @endif
                     </td>
+                    
                 </tr>
             @endforeach
         </tbody>

@@ -51,20 +51,22 @@
                                     <td>{{ $booking->status_submission }}</td>
                                     <td>{{ $booking->status_payment }}</td>
                                     <td>
-                                        @if ($booking->status_payment == 'Unpaid')
-                                            <form action="{{ route('bookings.updatePaymentStatus', $booking->id_booking) }}" method="POST">
+                                        @if ($booking->status_submission == 'Confirmed' && $booking->status_payment == 'Paid')
+                                            <form action="{{ route('bookings.requestReturn', $booking->id_booking) }}" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-warning btn-sm">Request Return</button>
+                                            </form>
+                                            <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Submission Invoice</a>
+                                        @elseif ($booking->status_payment == 'Unpaid')
+                                            <form action="{{ route('bookings.updatePaymentStatus', $booking->id_booking) }}" method="POST" style="display:inline-block;">
                                                 @csrf
                                                 <button type="submit" class="btn btn-primary btn-sm">Pay</button>
                                             </form>
-                                        @elseif ($booking->status_submission == 'Confirmed')
-                                            <form action="{{ route('bookings.requestReturn', $booking->id_booking) }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-warning btn-sm">Return</button>
-                                            </form>
-                                        @elseif ($booking->status_submission == 'Return Requested')
-                                            <span class="text-info">Return Requested</span>
                                         @else
                                             <span class="text-success">Paid</span>
+                                            @if ($booking->status_submission == 'Returned')
+                                                <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Return Invoice</a>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>
