@@ -14,6 +14,34 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('startbootstrap-grayscale-gh-pages/css/styles.css')}}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{asset('shoppers-gh-pages/fonts/icomoon/style.css')}}">
+        <link rel="stylesheet" href="{{asset('shoppers-gh-pages/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('shoppers-gh-pages/css/magnific-popup.css')}}">
+        <link rel="stylesheet" href="{{asset('shoppers-gh-pages/css/jquery-ui.css')}}">
+        <link rel="stylesheet" href="{{asset('shoppers-gh-pages/css/owl.carousel.min.css')}}">
+        <link rel="stylesheet" href="{{asset('shoppers-gh-pages/css/owl.theme.default.min.css')}}">
+        <link rel="stylesheet" href="{{asset('shoppers-gh-pages/css/aos.css')}}">
+        <link rel="stylesheet" href="{{asset('shoppers-gh-pages/css/style.css')}}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <style>
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon {
+                background-color: black;
+            }
+    
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 5%; /* Adjust the width to move buttons further away */
+            }
+    
+            .carousel-control-prev {
+                left: -5%; /* Move the left button further left */
+            }
+    
+            .carousel-control-next {
+                right: -5%; /* Move the right button further right */
+            }
+        </style>
     </head>
     <x-app-layout>
     </x-app-layout>
@@ -28,7 +56,7 @@
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">RentalBoss</h1>
                         <h2 class="text-white-50 mx-auto mt-2 mb-5">Tugas Besar Desain Pemograman Web</h2>
-                        <a class="btn btn-primary btn-grey" href="#about">LETS GO</a>
+                        <a class="btn btn-primary btn-grey" href="{{route('list')}}">LETSS GOOOOOOO</a>
 
                     </div>
                 </div>
@@ -48,49 +76,36 @@
                 {{-- <img class="img-fluid" src="{{asset('startbootstrap-grayscale-gh-pages/assets/img/ipad.png')}}" alt="..." /> --}}
             </div>
         </section>
-        <!-- Projects-->
-        <section class="projects-section bg-light" id="projects">
-            <div class="container px-4 px-lg-5">
-                <!-- Featured Project Row-->
-                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="{{asset('startbootstrap-grayscale-gh-pages/assets/img/bg-masthead.jpg')}}" alt="..." /></div>
-                    <div class="col-xl-4 col-lg-5">
-                        <div class="featured-text text-center text-lg-left">
-                            <h4>Shoreline</h4>
-                            <p class="text-black-50 mb-0">Grayscale is open source and MIT licensed. This means you can use it for any project - even commercial projects! Download it, customize it, and publish your website!</p>
-                        </div>
-                    </div>
+        <!-- Projects Section -->
+        <div class="site-section block-3 site-blocks-2 bg-light">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-7 site-section-heading text-center pt-4">
+                  <h2>Produk yang dijual</h2>
                 </div>
-                <!-- Project One Row-->
-                <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="{{asset('startbootstrap-grayscale-gh-pages/assets/img/demo-image-01.jpg')}}" alt="..." /></div>
-                    <div class="col-lg-6">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">Misty</h4>
-                                    <p class="mb-0 text-white-50">An example of where you can put an image of a project, or anything else, along with a description.</p>
-                                </div>
-                            </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="nonloop-block-3 owl-carousel">
+                    @foreach ($barangs as $index => $barang)
+                    <div class="item">
+                      <div class="block-4 text-center">
+                        <figure class="block-4-image">
+                          <img src="{{ asset('images/' . $barang->foto_barang) }}" alt="{{ $barang->nama_barang }}" class="img-fluid">
+                        </figure>
+                        <div class="block-4-text p-4">
+                          <h3>{{ $barang->nama_barang }}</h3>
+                          <p class="text-black-50 mb-0">Harga: Rp {{ number_format($barang->harga_barang, 2) }}</p>
                         </div>
+                      </div>
                     </div>
+                    @endforeach
+                  </div>
                 </div>
-                <!-- Project Two Row-->
-                <div class="row gx-0 justify-content-center">
-                    <div class="col-lg-6"><img class="img-fluid" src="{{asset('startbootstrap-grayscale-gh-pages/assets/img/demo-image-02.jpg')}}" alt="..." /></div>
-                    <div class="col-lg-6 order-lg-first">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">Mountains</h4>
-                                    <p class="mb-0 text-white-50">Another example of a project with its respective description. These sections work well responsively as well!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-        </section>
+          </div>
+
         <!-- Signup-->
         <section class="signup-section" id="signup">
             <div class="container px-4 px-lg-5">
@@ -188,5 +203,15 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="{{asset('shoppers-gh-pages/js/jquery-3.3.1.min.js')}}"></script>
+        <script src="{{asset('shoppers-gh-pages/js/jquery-ui.js')}}"></script>
+        <script src="{{asset('shoppers-gh-pages/js/popper.min.js')}}"></script>
+        <script src="{{asset('shoppers-gh-pages/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('shoppers-gh-pages/js/owl.carousel.min.js')}}"></script>
+        <script src="{{asset('shoppers-gh-pages/js/jquery.magnific-popup.min.js')}}"></script>
+        <script src="{{asset('shoppers-gh-pages/js/aos.js')}}"></script>
+
+        <script src="{{asset('shoppers-gh-pages/js/main.js')}}"></script>
     </body>
 </html>
