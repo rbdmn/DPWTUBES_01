@@ -55,6 +55,10 @@
                     <td>{{ $booking->keranjang->jumlah_barang_sewa }}</td>
                 </tr>
                 <tr>
+                    <th>Durasi</th>
+                    <td>{{ $booking->keranjang->durasi }}</td>
+                </tr>
+                <tr>
                     <th>Total Harga</th>
                     <td>Rp {{ number_format($booking->total_harga, 2) }}</td>
                 </tr>

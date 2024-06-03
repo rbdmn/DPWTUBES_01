@@ -38,6 +38,9 @@ Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
 
 Route::delete('/cart/delete/{id_keranjang}', [CartController::class, 'destroy'])->name('cart.destroy');
 
+Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('booking');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');

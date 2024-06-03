@@ -16,6 +16,7 @@ class Keranjang extends Model
         'id_barang',
         'nama_barang_sewa',
         'jumlah_barang_sewa',
+        'durasi',
         'created_at',
         'updated_at',
         'sudah_book',

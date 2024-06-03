@@ -50,6 +50,7 @@
                                 <th scope="col">Nama Barang</th>
                                 <th scope="col">Harga</th>
                                 <th scope="col">Jumlah disewa</th>
+                                <th scope="col">Durasi (hari)</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -65,6 +66,16 @@
                                         <td>Rp {{ number_format($item->barang->harga_barang, 2) }}</td>
                                         <td>{{ $item->jumlah_barang_sewa }}</td>
                                         <td>
+                                            <form action="{{ route('cart.update', $item->id_keranjang) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" name="durasi" value="{{ $item->durasi }}" min="1" class="form-control" style="width: 60px;" required>
+                                                    <button type="submit" class="btn btn-primary btn-sm ms-2">Update</button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td>
                                             <form action="{{ route('cart.destroy', $item->id_keranjang) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -79,6 +90,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    
                     <form action="{{ route('bookings.store') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-success btn-lg">Submit All</button>

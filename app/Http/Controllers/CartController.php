@@ -47,4 +47,18 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Item added to cart successfully!');
     }
+
+    public function update(Request $request, $id)
+    {
+        $keranjang = Keranjang::find($id);
+        if ($keranjang && $keranjang->id_user == Auth::id() && $keranjang->sudah_book == 0) {
+            $keranjang->update([
+                'durasi' => $request->input('durasi'),
+            ]);
+
+            return redirect()->back()->with('success', 'Durasi updated successfully!');
+        }
+
+        return redirect()->back()->with('error', 'Failed to update durasi!');
+    }
 }
