@@ -43,7 +43,7 @@
         <div class="content">
             <table>
                 <tr>
-                    <th>User Name</th>
+                    <th>Nama Pelanggan</th>
                     <td>{{ $booking->user->name }}</td>
                 </tr>
                 <tr>
@@ -51,8 +51,16 @@
                     <td>{{ $booking->nama_barang }}</td>
                 </tr>
                 <tr>
+                    <th>Jumlah Barang</th>
+                    <td>{{ $booking->keranjang->jumlah_barang_sewa }}</td>
+                </tr>
+                <tr>
                     <th>Total Harga</th>
                     <td>Rp {{ number_format($booking->total_harga, 2) }}</td>
+                </tr>
+                <tr>
+                    <th>Sewa Kapan</th>
+                    <td>{{ $booking->created_at }}</td>
                 </tr>
                 <tr>
                     <th>Status Submission</th>
@@ -65,7 +73,7 @@
             </table>
         </div>
         <div class="footer">
-            <p>&copy; 2024 Your Company. All rights reserved.</p>
+            <p>&copy; 2024 RENTALBOSS. Seluruh hak cipta.</p>
         </div>
     </div>
 </body>

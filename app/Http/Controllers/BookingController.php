@@ -17,10 +17,17 @@ class BookingController extends Controller
         $bookings = Booking::where('id_user', Auth::id())->get();
         return view('booking', compact('bookings'));
     }
+
+    public function destroy($id_booking)
+    {
+        $booking = Booking::findOrFail($id_booking);
+        $booking->delete();
+        return redirect()->back()->with('success', 'Item deleted successfully');
+    }
     
     public function store(Request $request)
     {
-        $keranjangs = Keranjang::where('id_user', Auth::id())->get();
+        $keranjangs = Keranjang::where('id_user', Auth::id())->where('sudah_book', false)->get();
 
         foreach ($keranjangs as $keranjang) {
             // Fetch the harga_barang from the barangs table
@@ -36,10 +43,13 @@ class BookingController extends Controller
                     'status_submission' => 'Pending',
                     'status_payment' => 'Unpaid',
                 ]);
+
+                // Update the keranjang to mark it as booked
+                $keranjang->update(['sudah_book' => true]);
             }
         }
 
-        return redirect()->route('booking')->with('success', 'All items have been submitted!');
+        return redirect()->back()->with('success', 'All items have been submitted!');
     }
 
     public function updatePaymentStatus($id_booking)
@@ -78,7 +88,7 @@ class BookingController extends Controller
 
     public function generateSubmissionInvoice($id_booking)
     {
-        $booking = Booking::with('user')->find($id_booking);
+        $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
         if (!$booking) {
             return redirect()->route('booking')->with('error', 'Booking not found.');
         }
@@ -89,7 +99,7 @@ class BookingController extends Controller
 
     public function generateReturnInvoice($id_booking)
     {
-        $booking = Booking::with('user')->find($id_booking);
+        $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
         if (!$booking) {
             return redirect()->route('booking')->with('error', 'Booking not found.');
         }

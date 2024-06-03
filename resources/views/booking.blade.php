@@ -54,6 +54,11 @@
                                     <td>
                                         @if ($booking->status_payment == 'Unpaid')
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#paymentModal" onclick="setBookingId({{ $booking->id_booking }})">Pay</button>
+                                            <form action="{{ route('booking.destroy', $booking->id_booking) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
                                         @elseif ($booking->status_submission == 'Confirmed' && $booking->status_payment == 'Paid')
                                             <form action="{{ route('bookings.requestReturn', $booking->id_booking) }}" method="POST" style="display:inline-block;">
                                                 @csrf
@@ -65,6 +70,7 @@
                                         @else
                                             <span class="text-success">Paid</span>
                                         @endif
+                                        
                                     </td>
                                     <td>
                                         @if (($booking->status_submission == 'Confirmed' && $booking->status_payment == 'Paid'))

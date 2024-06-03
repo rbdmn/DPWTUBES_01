@@ -27,7 +27,7 @@ class Booking extends Model
 
     public function keranjang()
     {
-        return $this->belongsTo(Keranjang::class, 'id_keranjang');
+        return $this->belongsTo(Keranjang::class, 'id_keranjang', 'id_keranjang');
     }
 
     const STATUS_PENDING = 'Pending';

@@ -53,21 +53,29 @@
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
+                        @php
+                            $iterasi = 1;
+                        @endphp
                         <tbody>
                             @foreach ($cart as $item)
-                                <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $item->nama_barang_sewa }}</td>
-                                    <td>Rp {{ number_format($item->barang->harga_barang, 2) }}</td>
-                                    <td>{{ $item->jumlah_barang_sewa }}</td>
-                                    <td>
-                                        <form action="{{ route('cart.destroy', $item->id_keranjang) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                @if (($item->sudah_book) == 0)
+                                    <tr>
+                                        <th scope="row">{{ $iterasi }}</th>
+                                        <td>{{ $item->nama_barang_sewa }}</td>
+                                        <td>Rp {{ number_format($item->barang->harga_barang, 2) }}</td>
+                                        <td>{{ $item->jumlah_barang_sewa }}</td>
+                                        <td>
+                                            <form action="{{ route('cart.destroy', $item->id_keranjang) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $iterasi++;
+                                    @endphp
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

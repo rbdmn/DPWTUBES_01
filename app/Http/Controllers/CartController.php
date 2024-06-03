@@ -20,26 +20,6 @@ class CartController extends Controller
 
         return view('keranjang', compact('cart'));
     }
-    // public function index()
-    // {
-    //     // Fetch cart items from the database using a join operation
-    //     $cart = DB::table('keranjangs')
-    //         ->join('barangs', 'keranjangs.id_barang', '=', 'barangs.id_barang')
-    //         ->where('keranjangs.id', auth()->id())
-    //         ->select('keranjangs.id_keranjang', 'keranjangs.id', 'keranjangs.nama_barang_sewa', 'barangs.harga_barang', 'keranjangs.jumlah_barang_sewa')
-    //         ->get();
-
-    //     // Pass the cart data to the view
-    //     return view('keranjang', ['cart' => $cart]);
-    // }
-
-    public function update(Request $request)
-    {
-        $cart = Keranjang::where('id', Auth::id())->first();
-        $item = $cart->items()->find($request->input('id'));
-        $item->update(['jumlah_barang_sewa' => $request->input('quantity')]);
-        return redirect()->route('keranjang');
-    }
 
     public function destroy($id_keranjang)
     {
