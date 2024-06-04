@@ -51,10 +51,10 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/admin/confirm/{id_booking}', [AdminController::class, 'confirmSubmission'])->name('admin.confirmSubmission');
 Route::post('/admin/bookings/confirm-return/{id_booking}', [AdminController::class, 'confirmReturn'])->name('admin.confirmReturn');
-Route::post('/admin/reject-submission/{id_booking}',[AdminController::class, 'rejectSubmission'])->name('admin.rejectSubmission');
+Route::post('/admin/reject-submission/{id_booking}', [AdminController::class, 'rejectSubmission'])->name('admin.rejectSubmission');
 
 
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -15,8 +15,8 @@ class CartController extends Controller
     public function index()
     {
         $cart = Keranjang::with('barang')
-        ->where('id_user', auth()->id())
-        ->get();
+            ->where('id_user', auth()->id())
+            ->get();
 
         return view('keranjang', compact('cart'));
     }

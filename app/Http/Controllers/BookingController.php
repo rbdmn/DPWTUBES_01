@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class BookingController extends Controller
         $booking->delete();
         return redirect()->back()->with('success', 'Item deleted successfully');
     }
-    
+
     public function store(Request $request)
     {
         $keranjangs = Keranjang::where('id_user', Auth::id())->where('sudah_book', false)->get();
@@ -43,8 +44,8 @@ class BookingController extends Controller
                     'total_harga' => $total_harga,
                     'status_submission' => 'Pending',
                     'status_payment' => 'Unpaid',
-                    'created_at' => $currentTimestamp, 
-                    'updated_at' => $currentTimestamp, 
+                    'created_at' => $currentTimestamp,
+                    'updated_at' => $currentTimestamp,
                 ]);
 
                 // Update the keranjang to mark it as booked
@@ -111,4 +112,3 @@ class BookingController extends Controller
         return $pdf->download('return_invoice_' . $booking->id_booking . '.pdf');
     }
 }
-?>

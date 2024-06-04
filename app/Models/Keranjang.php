@@ -38,5 +38,3 @@ class Keranjang extends Model
         return $this->hasOne(Booking::class, 'id_keranjang');
     }
 }
-
-?>

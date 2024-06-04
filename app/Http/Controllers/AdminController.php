@@ -57,9 +57,7 @@ class AdminController extends Controller
             $booking->status_submission = 'Rejected';
             $booking->save();
         }
-        
+
         return redirect()->route('admin.index')->with('success', 'Loan submission has been rejected.');
     }
-
-    
 }
