@@ -30,14 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 Route::get('list', [ProfileController::class, 'data'])->name('list');
 
 Route::post('/cart/add/{id_barang}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
-
 Route::delete('/cart/delete/{id_keranjang}', [CartController::class, 'destroy'])->name('cart.destroy');
-
 Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
 
 
@@ -47,14 +44,15 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/bookings/delete/{id_booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
     Route::post('/bookings/update-payment-status/{id_booking}', [BookingController::class, 'updatePaymentStatus'])->name('bookings.updatePaymentStatus');
     Route::post('/bookings/request-return/{id_booking}', [BookingController::class, 'requestReturn'])->name('bookings.requestReturn');
+    Route::get('/bookings/invoice/submission/{id_booking}', [BookingController::class, 'generateSubmissionInvoice'])->name('bookings.generateSubmissionInvoice');
+    Route::get('/bookings/invoice/return/{id_booking}', [BookingController::class, 'generateReturnInvoice'])->name('bookings.generateReturnInvoice');
 });
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/admin/confirm/{id_booking}', [AdminController::class, 'confirmSubmission'])->name('admin.confirmSubmission');
 Route::post('/admin/bookings/confirm-return/{id_booking}', [AdminController::class, 'confirmReturn'])->name('admin.confirmReturn');
 
-Route::get('/bookings/invoice/submission/{id_booking}', [BookingController::class, 'generateSubmissionInvoice'])->name('bookings.generateSubmissionInvoice');
-Route::get('/bookings/invoice/return/{id_booking}', [BookingController::class, 'generateReturnInvoice'])->name('bookings.generateReturnInvoice');
+
 
 
 require __DIR__.'/auth.php';

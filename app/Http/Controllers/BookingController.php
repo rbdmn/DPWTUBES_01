@@ -34,6 +34,7 @@ class BookingController extends Controller
             $barang = Barang::find($keranjang->id_barang);
             if ($barang) {
                 $total_harga = $barang->harga_barang * $keranjang->jumlah_barang_sewa;
+                $currentTimestamp = now(); // Get the current timestamp
 
                 Booking::create([
                     'id_user' => Auth::id(),
@@ -42,6 +43,8 @@ class BookingController extends Controller
                     'total_harga' => $total_harga,
                     'status_submission' => 'Pending',
                     'status_payment' => 'Unpaid',
+                    'created_at' => $currentTimestamp, 
+                    'updated_at' => $currentTimestamp, 
                 ]);
 
                 // Update the keranjang to mark it as booked

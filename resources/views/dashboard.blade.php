@@ -49,6 +49,7 @@
     <body id="page-top">
         <!-- Navigation-->
         
+        
         <!-- Masthead-->
         <header class="masthead">
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
@@ -56,7 +57,6 @@
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">RentalBoss</h1>
                         <h2 class="text-white-50 mx-auto mt-2 mb-5">Tugas Besar Desain Pemograman Web</h2>
-                        <a class="btn btn-primary btn-grey" href="{{route('list')}}">LETSS GOOOOOOO</a>
 
                     </div>
                 </div>
@@ -76,6 +76,17 @@
                 {{-- <img class="img-fluid" src="{{asset('startbootstrap-grayscale-gh-pages/assets/img/ipad.png')}}" alt="..." /> --}}
             </div>
         </section>
+        <!-- Motivation Card -->
+        <figure class="note note-secondary p-4">
+            <blockquote class="blockquote">
+              <p class="pb-2" style="text-align: center">
+                "Musuh terbesar dari pengetahuan bukanlah ketidakpedulian, tetapi ilusi mengenai pengetahuan."
+              </p>
+            </blockquote>
+            <figcaption class="blockquote-footer mb-0" style="text-align: center">
+                Stephen Hawking
+            </figcaption>
+          </figure>
         <!-- Projects Section -->
         <div class="site-section block-3 site-blocks-2 bg-light">
             <div class="container">

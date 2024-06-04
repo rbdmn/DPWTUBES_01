@@ -9,19 +9,46 @@
         .bg-darkgrey {
             background-color: rgba(51, 47, 47, 0.633);
         }
+        body {
+            background-color: #f8f9fa;
+            background-image: url('{{ url('images/scenerynight.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+        }
+        .table thead th {
+            background-color: #030303;
+            color: #fff;
+        }
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .badge-pending {
+            background-color: #ffc107;
+        }
+        .badge-confirmed, .badge-paid {
+            background-color: #28a745;
+        }
+        .badge-return-requested {
+            background-color: #17a2b8;
+        }
+        .table-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
     </style>
 </head>
 <body>
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight" style="text-align: center">
-            {{ __('Bookings') }}
-        </h2>
+        <h2 class="font-semibold text-xl text-gray-800 text-center">{{ __('Bookings') }}</h2>
     </x-slot>
 
-    <div class="bg-darkgrey py-12" style="background-image: url('startbootstrap-grayscale-gh-pages/assets/img/campsite.jpg'); background-blend-mode: multiply; background-size: cover; background-position: center;">
+    <div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden">
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -54,7 +81,7 @@
                                     <td>
                                         @if ($booking->status_payment == 'Unpaid')
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#paymentModal" onclick="setBookingId({{ $booking->id_booking }})">Pay</button>
-                                            <form action="{{ route('booking.destroy', $booking->id_booking) }}" method="POST">
+                                            <form action="{{ route('booking.destroy', $booking->id_booking) }}" method="POST" style="display:inline-block;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -64,13 +91,11 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-warning btn-sm">Request Return</button>
                                             </form>
-                                            {{-- <span class="text-success">Paid</span> --}}
                                         @elseif ($booking->status_submission == 'Returned')
                                             <span class="text-success">Returned</span>
                                         @else
                                             <span class="text-success">Paid</span>
                                         @endif
-                                        
                                     </td>
                                     <td>
                                         @if (($booking->status_submission == 'Confirmed' && $booking->status_payment == 'Paid'))
@@ -89,22 +114,23 @@
     </div>
 
     <!-- Modal -->
-<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="paymentModalLabel">Verification Check</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Please choose a payment method:</p>
-                <button type="button" class="btn btn-success" id="payWithCredit">Credit</button>
-                <button type="button" class="btn btn-info" id="payWithQRIS">QRIS</button>
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Verification Check</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Please choose a payment method:</p>
+                    <button type="button" class="btn btn-success" id="payWithCredit">Credit</button>
+                    <button type="button" class="btn btn-info" id="payWithQRIS">QRIS</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </x-app-layout>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     let bookingId;

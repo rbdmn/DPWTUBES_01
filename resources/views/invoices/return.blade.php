@@ -55,7 +55,7 @@
                     <td>{{ $booking->keranjang->jumlah_barang_sewa }}</td>
                 </tr>
                 <tr>
-                    <th>Durasi</th>
+                    <th>Durasi per hari</th>
                     <td>{{ $booking->keranjang->durasi }}</td>
                 </tr>
                 <tr>

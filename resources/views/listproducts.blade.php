@@ -74,7 +74,7 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Nama Barang</th>
-                                <th scope="col">Harga Barang</th>
+                                <th scope="col">Harga Sewa Barang per hari</th>
                                 <th scope="col">Foto</th>
                                 <th scope="col">Quantity</th>
                             </tr>
@@ -84,7 +84,7 @@
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $item->nama_barang }}</td>
-                                    <td>{{ $item->harga_barang }}</td>
+                                    <td>Rp {{ number_format($item->harga_barang, 2) }}</td>
                                     <td>
                                         <img src="{{ asset('images/' . $item->foto_barang) }}" alt="Foto Barang" style="width: 100px; height: auto;">
                                     </td>
