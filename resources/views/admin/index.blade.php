@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin - Bookings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
         body {
             background-color: #f8f9fa;
+            background-image: url('{{ url('images/mountain.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
         .table thead th {
             background-color: #030303;
@@ -29,14 +35,25 @@
             display: flex;
             gap: 0.5rem;
         }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        .card-header {
+            background-color: rgba(0, 123, 255, 0.8);
+            color: #fff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
     </style>
 </head>
-<body style="background-image: url('{{ url('images/mountain.jpg') }}');">
-
+<body>
 
 <div class="container mt-5">
     <div class="card">
-        <div class="card-header bg-info text-black">
+        <div class="card-header">
             <h2 style="text-align: center">HALAMAN ADMIN</h2>
         </div>
         <div class="card-body">
@@ -71,9 +88,13 @@
                                     @if ($booking->status_submission == 'Pending')
                                         <span class="badge badge-pending">Pending</span>
                                     @elseif ($booking->status_submission == 'Return Requested')
-                                        <span class="badge badge-return-requested">Return Requested</span>
-                                    @else
-                                        <span class="badge badge-confirmed">Confirmed</span>
+                                        <span class="badge badge-pending">Return Requested</span>
+                                    @elseif ($booking->status_submission == 'Returned')
+                                        <span class="badge badge-pill badge-info">Returned</span>
+                                    @elseif ($booking->status_submission == 'Confirmed')
+                                        <span class="badge badge-paid">Confirmed</span>
+                                    @elseif ($booking->status_submission == 'Rejected')
+                                        <span class="badge badge-pill badge-danger">Rejected</span>
                                     @endif
                                 </td>
                                 <td>
@@ -90,24 +111,31 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-success btn-sm">Serahkan Barang</button>
                                             </form>
-                                            {{-- <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Invoice</a> --}}
                                         @elseif ($booking->status_submission == 'Return Requested')
                                             <form action="{{ route('admin.confirmReturn', $booking->id_booking) }}" method="POST" style="display:inline-block;">
                                                 @csrf
                                                 <button type="submit" class="btn btn-success btn-sm">Confirm Return</button>
                                             </form>
-                                            {{-- <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Invoice</a> --}}
-                                        @else
-                                            <span class="text-success">Confirmed</span>
+                                        @elseif ($booking->status_submission == 'Confirmed')
+                                            <form action="{{ route('admin.rejectSubmission', $booking->id_booking) }}" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Tolak Peminjaman</button>
+                                            </form>
+                                        @elseif ($booking->status_submission == 'Returned')
+                                            <span class="text-success">Returned</span>
                                         @endif
                                     </div>
                                 </td>
                                 <td>
-                                        @if (($booking->status_submission == 'Pending' && $booking->status_payment == 'Paid'))
-                                            <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Submission Invoice</a>
-                                        @elseif ($booking->status_submission == 'Return Requested' && $booking->status_payment == 'Paid')
-                                            <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Return Invoice</a>
-                                        @endif
+                                    @if (($booking->status_submission == 'Pending' && $booking->status_payment == 'Paid'))
+                                        <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Submission Invoice</a>
+                                    @elseif ($booking->status_submission == 'Return Requested' && $booking->status_payment == 'Paid')
+                                        <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Return Invoice</a>
+                                    @elseif ($booking->status_submission == 'Confirmed' && $booking->status_payment == 'Paid')
+                                        <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Submission Invoice</a>
+                                    @elseif ($booking->status_submission == 'Returned' && $booking->status_payment == 'Paid')
+                                        <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}" class="btn btn-info btn-sm">Download Return Invoice</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

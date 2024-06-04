@@ -37,8 +37,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Invoice Return</h1>
-            <p>Invoice for booking return</p>
+            <h1>Tagihan</h1>
+            <p>Tagihan untuk pengembalian barang</p>
         </div>
         <div class="content">
             <table>
