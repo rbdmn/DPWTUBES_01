@@ -23,21 +23,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route menuju dashboard user
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+// Rute untuk pengelolaan profil user
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Rute untuk mendapatkan data list profil
 Route::get('list', [ProfileController::class, 'data'])->name('list');
 
+// Rute untuk pengelolaan keranjang belanja
 Route::post('/cart/add/{id_barang}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
 Route::delete('/cart/delete/{id_keranjang}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
 
-
+// Rute untuk pengelolaan booking
 Route::middleware(['auth'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('booking');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
@@ -48,13 +53,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bookings/invoice/return/{id_booking}', [BookingController::class, 'generateReturnInvoice'])->name('bookings.generateReturnInvoice');
 });
 
+// Rute untuk pengelolaan admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/admin/confirm/{id_booking}', [AdminController::class, 'confirmSubmission'])->name('admin.confirmSubmission');
 Route::post('/admin/bookings/confirm-return/{id_booking}', [AdminController::class, 'confirmReturn'])->name('admin.confirmReturn');
 Route::post('/admin/reject-submission/{id_booking}', [AdminController::class, 'rejectSubmission'])->name('admin.rejectSubmission');
-
-
-
-
 
 require __DIR__ . '/auth.php';

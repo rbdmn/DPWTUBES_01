@@ -11,7 +11,7 @@
     <style>
         body {
             background-color: #f8f9fa;
-            background-image: url('{{ url(' images/mountain.jpg') }}');
+            background-image: url('{{ url('images/mountain.jpg') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
