@@ -48,6 +48,135 @@
             right: -5%;
             /* Move the right button further right */
         }
+
+        body {
+            background: white;
+        }
+
+        .gtco-testimonials {
+            position: relative;
+            margin-top: 30px;
+
+            h2 {
+                font-size: 30px;
+                text-align: center;
+                color: #333333;
+                margin-bottom: 50px;
+            }
+
+            .owl-stage-outer {
+                padding: 30px 0;
+            }
+
+            .owl-nav {
+                display: none;
+            }
+
+            .owl-dots {
+                text-align: center;
+
+                span {
+                    position: relative;
+                    height: 10px;
+                    width: 10px;
+                    border-radius: 50%;
+                    display: block;
+                    background: #fff;
+                    border: 2px solid #01b0f8;
+                    margin: 0 5px;
+                }
+
+                .active {
+                    box-shadow: none;
+
+                    span {
+                        background: #01b0f8;
+                        box-shadow: none;
+                        height: 12px;
+                        width: 12px;
+                        margin-bottom: -1px;
+                    }
+                }
+            }
+
+            .card {
+                background: #fff;
+                box-shadow: 0 8px 30px -7px #c9dff0;
+                margin: 0 20px;
+                padding: 0 10px;
+                border-radius: 20px;
+                border: 0;
+
+                .card-img-top {
+                    max-width: 100px;
+                    border-radius: 50%;
+                    margin: 15px auto 0;
+                    box-shadow: 0 8px 20px -4px #95abbb;
+                    width: 100px;
+                    height: 100px;
+                }
+
+                h5 {
+                    color: #01b0f8;
+                    font-size: 21px;
+                    line-height: 1.3;
+
+                    span {
+                        font-size: 18px;
+                        color: #666666;
+                    }
+                }
+
+                p {
+                    font-size: 18px;
+                    color: #555;
+                    padding-bottom: 15px;
+                }
+            }
+
+            .active {
+                opacity: 0.5;
+                transition: all 0.3s;
+            }
+
+            .center {
+                opacity: 1;
+
+                h5 {
+                    font-size: 24px;
+
+                    span {
+                        font-size: 20px;
+                    }
+                }
+
+                .card-img-top {
+                    max-width: 100%;
+                    height: 120px;
+                    width: 120px;
+                }
+            }
+        }
+
+        @media (max-width: 767px) {
+            .gtco-testimonials {
+                margin-top: 20px;
+            }
+        }
+
+        .owl-carousel {
+            .owl-nav button {
+
+                &.owl-next,
+                &.owl-prev {
+                    outline: 0;
+                }
+            }
+
+            button.owl-dot {
+                outline: 0;
+            }
+        }
     </style>
 </head>
 <x-app-layout>
@@ -95,6 +224,62 @@
             Stephen Hawking
         </figcaption>
     </figure>
+
+    {{-- testimonial --}}
+    <div class="gtco-testimonials">
+        <h2>Terbukti Website Keren</h2>
+        <div class="owl-carousel owl-carousel1 owl-theme">
+            <div>
+                <div class="card text-center"><img class="card-img-top"
+                        src="{{ asset('images/deddycorubir.jpg') }}"
+                        alt="">
+                    <div class="card-body">
+                        <h5>Daddy<br />
+                            <span> Presenter </span>
+                        </h5>
+                        <p class="card-text">“ keren banget cuy, saya bangga ” </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card text-center"><img class="card-img-top"
+                        src="{{ asset('images/komeng.jpg') }}"
+                        alt="">
+                    <div class="card-body">
+                        <h5>Mengko<br />
+                            <span> Pimpinan </span>
+                        </h5>
+                        <p class="card-text">“ jadi pengen camping ” </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card text-center"><img class="card-img-top"
+                        src="{{ asset('images/radit.jpeg') }}"
+                        alt="">
+                    <div class="card-body">
+                        <h5>Radit<br />
+                            <span> Komedian </span>
+                        </h5>
+                        <p class="card-text">“ rentalboss sudah terverifikasi oleh saya ” </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card text-center"><img class="card-img-top"
+                        src="{{ asset('images/dea.jpeg') }}"
+                        alt="">
+                    <div class="card-body">
+                        <h5>Rizal<br />
+                            <span> Programmer </span>
+                        </h5>
+                        <p class="card-text">“ panutan saya ini ” </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Projects Section -->
     <div class="site-section block-3 site-blocks-2 bg-light">
         <div class="container">
@@ -127,95 +312,6 @@
         </div>
     </div>
 
-    <!-- Signup-->
-    <section class="signup-section" id="signup">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5">
-                <div class="col-md-10 col-lg-8 mx-auto text-center">
-                    <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                    <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- * * SB Forms Contact Form * *-->
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- This form is pre-integrated with SB Forms.-->
-                    <!-- To make this form functional, sign up at-->
-                    <!-- https://startbootstrap.com/solution/contact-forms-->
-                    <!-- to get an API token!-->
-                    <form class="form-signup" id="contactForm" data-sb-form-api-token="API_TOKEN">
-                        <!-- Email address input-->
-                        <div class="row input-group-newsletter">
-                            <div class="col"><input class="form-control" id="emailAddress" type="email"
-                                    placeholder="Enter email address..." aria-label="Enter email address..."
-                                    data-sb-validations="required,email" /></div>
-                            <div class="col-auto"><button class="btn btn-primary disabled" id="submitButton"
-                                    type="submit">Notify Me!</button></div>
-                        </div>
-                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:required">An email is
-                            required.</div>
-                        <div class="invalid-feedback mt-2" data-sb-feedback="emailAddress:email">Email is not valid.
-                        </div>
-                        <!-- Submit success message-->
-                        <!---->
-                        <!-- This is what your users will see when the form-->
-                        <!-- has successfully submitted-->
-                        <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3 mt-2 text-white">
-                                <div class="fw-bolder">Form submission successful!</div>
-                                To activate this form, sign up at
-                                <br />
-                                <a
-                                    href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                            </div>
-                        </div>
-                        <!-- Submit error message-->
-                        <!---->
-                        <!-- This is what your users will see when there is-->
-                        <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage">
-                            <div class="text-center text-danger mb-3 mt-2">Error sending message!</div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Contact-->
-    <section class="contact-section bg-black">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5">
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card py-4 h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0">Address</h4>
-                            <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50">4923 Market Street, Orlando FL</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card py-4 h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-envelope text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0">Email</h4>
-                            <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50"><a href="#!">hello@yourdomain.com</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card py-4 h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0">Phone</h4>
-                            <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50">+1 (555) 902-8832</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <!-- Footer-->
     <footer class="footer bg-black small text-center text-white-50">
         <div class="container px-4 px-lg-5">Copyright &copy; RENTALBOSS 2024</div>
@@ -241,6 +337,40 @@
     <script src="{{asset('shoppers-gh-pages/js/aos.js')}}"></script>
 
     <script src="{{asset('shoppers-gh-pages/js/main.js')}}"></script>
+    <script>
+        (function () {
+    "use strict";
+
+    var carousels = function () {
+        $(".owl-carousel1").owlCarousel({
+        loop: true,
+        center: true,
+        margin: 0,
+        responsiveClass: true,
+        nav: false,
+        responsive: {
+            0: {
+            items: 1,
+            nav: false
+            },
+            680: {
+            items: 2,
+            nav: false,
+            loop: false
+            },
+            1000: {
+            items: 3,
+            nav: true
+            }
+        }
+        });
+    };
+
+    (function ($) {
+        carousels();
+    })(jQuery);
+    })();
+    </script>
 </body>
 
 </html>

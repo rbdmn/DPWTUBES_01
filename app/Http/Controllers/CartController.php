@@ -56,7 +56,7 @@ class CartController extends Controller
                 'durasi' => $request->input('durasi'),
             ]);
 
-            return redirect()->back()->with('success', 'Durasi updated successfully!');
+            // return redirect()->back()->with('success', 'Durasi updated successfully!');
         }
 
         return redirect()->back()->with('error', 'Failed to update durasi!');

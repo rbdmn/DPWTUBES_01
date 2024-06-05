@@ -5,8 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RENTALBOSS</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.min.css" rel="stylesheet" />
     <style>
         .bg-darkgrey {
             background-color: rgba(48, 47, 51, 0.633);
@@ -109,6 +116,79 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <!-- Shopping Cart Section -->
+                    {{-- <section class="h-100" style="background-color: #eee;">
+                        <div class="container h-100 py-5">
+                            <div class="row d-flex justify-content-center align-items-center h-100">
+                                <div class="col-10">
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+                                        <div>
+                                            <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"
+                                                    class="text-body">price <i class="fas fa-angle-down mt-1"></i></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    @foreach ($list as $item)
+                                    <div class="card rounded-3 mb-4">
+                                        <div class="card-body p-4">
+                                            <div class="row d-flex justify-content-between align-items-center">
+                                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                                    <img src="{{ asset('images/' . $item->foto_barang) }}"
+                                                        class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                                    <p class="lead fw-normal mb-2">{{ $item->nama_barang }}</p>
+                                                    <p><span class="text-muted">Size: </span>M <span
+                                                            class="text-muted">Color: </span>Grey</p>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                                    <button data-mdb-button-init data-mdb-ripple-init
+                                                        class="btn btn-link px-2"
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                    <input id="form1" min="0" name="quantity" value="2" type="number"
+                                                        class="form-control form-control-sm" />
+                                                    <button data-mdb-button-init data-mdb-ripple-init
+                                                        class="btn btn-link px-2"
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                                    <h5 class="mb-0">Rp {{ number_format($item->harga_barang, 2) }}</h5>
+                                                </div>
+                                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                    <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                    <div class="card mb-4">
+                                        <div class="card-body p-4 d-flex flex-row">
+                                            <div data-mdb-input-init class="form-outline flex-fill">
+                                                <input type="text" id="form1" class="form-control form-control-lg" />
+                                                <label class="form-label" for="form1">Discount code</label>
+                                            </div>
+                                            <button type="button" data-mdb-button-init data-mdb-ripple-init
+                                                class="btn btn-outline-warning btn-lg ms-3">Apply</button>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <button type="button" data-mdb-button-init data-mdb-ripple-init
+                                                class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- End of Shopping Cart Section --> --}}
+
                 </div>
             </div>
         </div>
@@ -116,6 +196,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.umd.min.js"></script>
 </body>
 
 </html>
