@@ -37,6 +37,9 @@ class BookingController extends Controller
                 $total_harga = $barang->harga_barang * $keranjang->jumlah_barang_sewa;
                 $currentTimestamp = now(); // Get the current timestamp
 
+                // Calculate due date
+                $dueDate = $currentTimestamp->copy()->addDays($keranjang->durasi);
+
                 Booking::create([
                     'id_user' => Auth::id(),
                     'id_keranjang' => $keranjang->id_keranjang,
@@ -46,6 +49,7 @@ class BookingController extends Controller
                     'status_payment' => 'Unpaid',
                     'created_at' => $currentTimestamp,
                     'updated_at' => $currentTimestamp,
+                    'due_date' => $dueDate,
                 ]);
 
                 // Update the keranjang to mark it as booked

@@ -65,12 +65,32 @@
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
         }
+
+        .custom-container {
+            max-width: 1600px;
+            /* Adjust as needed */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            /* sm:px-6 */
+            padding-right: 1.5rem;
+            /* sm:px-6 */
+        }
+
+        @media (min-width: 1024px) {
+            .custom-container {
+                padding-left: 2rem;
+                /* lg:px-8 */
+                padding-right: 2rem;
+                /* lg:px-8 */
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="container mt-5">
+    <div class="custom-container">
         <div class="card">
             <div class="card-header">
                 <h2 style="text-align: center">HALAMAN ADMIN</h2>
@@ -92,6 +112,7 @@
                                 <th scope="col">Total Harga</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Pembayaran</th>
+                                <th scope="col">Batas Waktu</th>
                                 <th scope="col">Action</th>
                                 <th scope="col">Download Bukti PDF</th>
                             </tr>
@@ -124,13 +145,22 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if ($booking->due_date)
+                                    @php
+                                    $dueDate = new DateTime($booking->due_date);
+                                    echo $dueDate->format('d-m-Y H:i');
+                                    @endphp
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
+                                <td>
                                     <div class="table-actions">
                                         @if ($booking->status_submission == 'Pending')
                                         <form action="{{ route('admin.confirmSubmission', $booking->id_booking) }}"
                                             method="POST" style="display:inline-block;">
                                             @csrf
-                                            <button type="submit" class="btn btn-success btn-sm">Serahkan
-                                                Barang</button>
+                                            <button type="submit" class="btn btn-success btn-sm">Serahkan Barang</button>
                                         </form>
                                         @elseif ($booking->status_submission == 'Return Requested')
                                         <form action="{{ route('admin.confirmReturn', $booking->id_booking) }}"
@@ -142,8 +172,7 @@
                                         <form action="{{ route('admin.rejectSubmission', $booking->id_booking) }}"
                                             method="POST" style="display:inline-block;">
                                             @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm">Tolak
-                                                Peminjaman</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Tolak Peminjaman</button>
                                         </form>
                                         @elseif ($booking->status_submission == 'Returned')
                                         <span class="text-success">Returned</span>
@@ -151,20 +180,16 @@
                                     </div>
                                 </td>
                                 <td>
-                                    @if (($booking->status_submission == 'Pending' && $booking->status_payment ==
-                                    'Paid'))
+                                    @if (($booking->status_submission == 'Pending' && $booking->status_payment == 'Paid'))
                                     <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Submission Invoice</a>
-                                    @elseif ($booking->status_submission == 'Return Requested' &&
-                                    $booking->status_payment == 'Paid')
+                                    @elseif ($booking->status_submission == 'Return Requested' && $booking->status_payment == 'Paid')
                                     <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Return Invoice</a>
-                                    @elseif ($booking->status_submission == 'Confirmed' && $booking->status_payment ==
-                                    'Paid')
+                                    @elseif ($booking->status_submission == 'Confirmed' && $booking->status_payment == 'Paid')
                                     <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Submission Invoice</a>
-                                    @elseif ($booking->status_submission == 'Returned' && $booking->status_payment ==
-                                    'Paid')
+                                    @elseif ($booking->status_submission == 'Returned' && $booking->status_payment == 'Paid')
                                     <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Return Invoice</a>
                                     @endif
@@ -172,7 +197,7 @@
                             </tr>
                             @endforeach
                         </tbody>
-                    </table>
+                    </table>                    
                 </div>
             </div>
         </div>

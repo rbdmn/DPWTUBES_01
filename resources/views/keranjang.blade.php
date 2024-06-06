@@ -64,7 +64,7 @@
                                     <h5 class="mb-0">Rp {{ number_format($item->barang->harga_barang, 2) }}</h5>
                                 </div>
                                 <!-- Durasi -->
-                                Durasi (jam)
+                                Durasi / hari
                                 <div class="col-md-2 col-lg-2 col-xl-2 d-flex align-items-center">
                                     <form action="{{ route('cart.update', $item->id_keranjang) }}" method="POST"
                                         class="d-flex align-items-center">
