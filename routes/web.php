@@ -58,7 +58,6 @@ Route::get('/admin_home', [AdminController::class, 'home'])->name('admin.home');
 Route::get('/admin_keuangan', [AdminController::class, 'keuangan'])->name('admin.keuangan');
 Route::get('/admin_pelanggan', [AdminController::class, 'pelanggan'])->name('admin.pelanggan');
 Route::get('/admin_transaksi', [AdminController::class, 'transaksi'])->name('admin.transaksi');
-Route::get('/admin_page1', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/admin/confirm/{id_booking}', [AdminController::class, 'confirmSubmission'])->name('admin.confirmSubmission');
 Route::post('/admin/bookings/confirm-return/{id_booking}', [AdminController::class, 'confirmReturn'])->name('admin.confirmReturn');
 Route::post('/admin/reject-submission/{id_booking}', [AdminController::class, 'rejectSubmission'])->name('admin.rejectSubmission');

@@ -8,17 +8,18 @@ use App\Models\Booking;
 use App\Models\Barang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-// use PDF;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class BookingController extends Controller
 {
+    // Menampilkan halaman daftar pemesanan pengguna
     public function index()
     {
         $bookings = Booking::where('id_user', Auth::id())->get();
         return view('booking', compact('bookings'));
     }
 
+    // Menghapus pemesanan berdasarkan ID
     public function destroy($id_booking)
     {
         $booking = Booking::findOrFail($id_booking);
@@ -26,20 +27,22 @@ class BookingController extends Controller
         return redirect()->back()->with('success', 'Item canceled successfully');
     }
 
+    // Menyimpan pemesanan dari keranjang ke dalam database
     public function store(Request $request)
     {
         $keranjangs = Keranjang::where('id_user', Auth::id())->where('sudah_book', false)->get();
 
         foreach ($keranjangs as $keranjang) {
-            // Fetch the harga_barang from the barangs table
+            
             $barang = Barang::find($keranjang->id_barang);
             if ($barang) {
                 $total_harga = ($barang->harga_barang * $keranjang->jumlah_barang_sewa) * $keranjang->durasi;
-                $currentTimestamp = now(); // Get the current timestamp
+                $currentTimestamp = now(); 
 
-                // Calculate due date
+                // Menghitung tanggal jatuh tempo
                 $dueDate = $currentTimestamp->copy()->addDays($keranjang->durasi);
 
+                // Membuat pemesanan baru
                 Booking::create([
                     'id_user' => Auth::id(),
                     'id_keranjang' => $keranjang->id_keranjang,
@@ -52,7 +55,7 @@ class BookingController extends Controller
                     'due_date' => $dueDate,
                 ]);
 
-                // Update the keranjang to mark it as booked
+                // Update status keranjang menjadi sudah dibooking
                 $keranjang->update(['sudah_book' => true]);
             }
         }
@@ -60,6 +63,7 @@ class BookingController extends Controller
         return redirect()->back()->with('success', 'All items have been submitted!');
     }
 
+    // Memperbarui status pembayaran pemesanan
     public function updatePaymentStatus($id_booking)
     {
         $booking = Booking::find($id_booking);
@@ -71,11 +75,12 @@ class BookingController extends Controller
         return redirect()->route('booking')->with('success', 'Payment status updated successfully!');
     }
 
+    // Melakukan pengembalian barang
     public function returnItem($id_booking)
     {
         $booking = Booking::find($id_booking);
         if ($booking && $booking->status_submission == Booking::STATUS_CONFIRMED) {
-            // Logic for handling the return action
+            // Logika untuk menangani tindakan pengembalian
             $booking->status_submission = 'Returned';
             $booking->save();
         }
@@ -83,6 +88,7 @@ class BookingController extends Controller
         return redirect()->route('booking')->with('success', 'Item returned successfully!');
     }
 
+    // Meminta pengembalian barang
     public function requestReturn($id_booking)
     {
         $booking = Booking::find($id_booking);
@@ -94,6 +100,7 @@ class BookingController extends Controller
         return redirect()->route('booking')->with('success', 'Return requested successfully!');
     }
 
+    // Membuat invoice pemesanan
     public function generateSubmissionInvoice($id_booking)
     {
         $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
@@ -105,6 +112,7 @@ class BookingController extends Controller
         return $pdf->download('submission_invoice_' . $booking->id_booking . '.pdf');
     }
 
+    // Membuat invoice pengembalian barang
     public function generateReturnInvoice($id_booking)
     {
         $booking = Booking::with(['user', 'keranjang'])->find($id_booking);

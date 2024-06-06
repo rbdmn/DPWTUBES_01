@@ -119,7 +119,7 @@
                         <h6 class="mb-0">Keuangan</h6>
                     </div>
                     <div class="table-responsive">
-                        <h4>Total Harga Sekarang: Rp {{ number_format($totalHarga, 2) }}</h4>
+                        <h4>Pendapatan Sekarang: Rp {{ number_format($totalHarga, 2) }}</h4>
                         <canvas id="targetChart" width="400" height="200"></canvas>
                     </div>
                 </div>
@@ -170,7 +170,7 @@
             var targetChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Total Harga Sekarang', 'Target Bulan ini'],
+                    labels: ['Pendapatan Sekarang', 'Target Bulan ini'],
                     datasets: [{
                         label: 'Total Harga',
                         data: [{{ $totalHarga }}, 5000000],

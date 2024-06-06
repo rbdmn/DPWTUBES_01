@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
-
+    // Menampilkan halaman keranjang belanja pengguna
     public function index()
     {
         $cart = Keranjang::with('barang')
@@ -21,6 +21,7 @@ class CartController extends Controller
         return view('keranjang', compact('cart'));
     }
 
+    // Menghapus item dari keranjang belanja berdasarkan ID keranjang
     public function destroy($id_keranjang)
     {
         $keranjang = Keranjang::findOrFail($id_keranjang);
@@ -28,6 +29,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Item deleted successfully');
     }
 
+    // Menambahkan item ke dalam keranjang belanja
     public function add(Request $request, $id_barang)
     {
         $request->validate([
@@ -48,6 +50,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Item added to cart successfully!');
     }
 
+    // Memperbarui durasi sewa barang dalam keranjang belanja
     public function update(Request $request, $id)
     {
         $keranjang = Keranjang::find($id);
@@ -55,8 +58,6 @@ class CartController extends Controller
             $keranjang->update([
                 'durasi' => $request->input('durasi'),
             ]);
-
-            // return redirect()->back()->with('success', 'Durasi updated successfully!');
         }
 
         return redirect()->back()->with('error', 'Failed to update durasi!');

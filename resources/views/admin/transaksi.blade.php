@@ -125,7 +125,7 @@
             <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
-                    <h6 class="mb-4">Leaderboard Barang Terlaris</h6>
+                    <h6 class="mb-4">Top 10 Barang Terlaris</h6>
                     <canvas id="leaderboardChart"></canvas>
                 </div>
             </div>
@@ -194,13 +194,16 @@
                         @endforeach
                     ],
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.5)',   // Red
-                        'rgba(54, 162, 235, 0.5)',   // Blue
-                        'rgba(255, 205, 86, 0.5)',   // Yellow
-                        'rgba(75, 192, 192, 0.5)',   // Green
-                        'rgba(153, 102, 255, 0.5)',  // Purple
-                        'rgba(255, 159, 64, 0.5)',   // Orange
-                        'rgba(201, 203, 207, 0.5)'   // Grey
+                        'rgba(255, 99, 132, 0.5)',    // Red
+                        'rgba(54, 162, 235, 0.5)',    // Blue
+                        'rgba(255, 205, 86, 0.5)',    // Yellow
+                        'rgba(75, 192, 192, 0.5)',    // Green
+                        'rgba(153, 102, 255, 0.5)',   // Purple
+                        'rgba(255, 159, 64, 0.5)',    // Orange
+                        'rgba(201, 203, 207, 0.5)',   // Grey
+                        'rgba(255, 0, 255, 0.5)',     // Magenta
+                        'rgba(0, 255, 255, 0.5)',     // Cyan
+                        'rgba(0, 0, 255, 0.5)'        // Dark Blue
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
@@ -209,7 +212,10 @@
                         'rgba(75, 192, 192, 1)',
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)',
-                        'rgba(201, 203, 207, 1)'
+                        'rgba(201, 203, 207, 1)',
+                        'rgba(255, 0, 255, 1)',
+                        'rgba(0, 255, 255, 1)',
+                        'rgba(0, 0, 255, 1)'
                     ],
                     borderWidth: 1
                 }]
@@ -225,6 +231,7 @@
             }
         });
     </script>
+    
     
 </body>
 

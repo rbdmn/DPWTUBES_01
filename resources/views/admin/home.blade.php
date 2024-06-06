@@ -159,18 +159,18 @@
                                         @if ($booking->status_submission == 'Pending')
                                         <span class="badge bg-warning text-dark">Pending</span>
                                         @elseif ($booking->status_submission == 'Return Requested')
-                                        <span class="badge bg-info">Return Requested</span>
+                                        <span class="badge bg-warning text-dark">Return Requested</span>
                                         @elseif ($booking->status_submission == 'Returned')
                                         <span class="badge bg-success">Returned</span>
                                         @elseif ($booking->status_submission == 'Confirmed')
-                                        <span class="badge bg-success">Confirmed</span>
+                                        <span class="badge bg-info">Confirmed</span>
                                         @elseif ($booking->status_submission == 'Rejected')
                                         <span class="badge bg-danger">Rejected</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if ($booking->status_payment == 'Paid')
-                                        <span class="badge bg-info">Paid</span>
+                                        <span class="badge bg-success">Paid</span>
                                         @else
                                         <span class="badge bg-warning text-dark">Unpaid</span>
                                         @endif
@@ -204,10 +204,10 @@
                                                 <button type="submit" class="btn btn-success btn-sm">Confirm
                                                     Return</button>
                                             </form>
-                                            @elseif ($booking->status_submission == 'Confirmed' ||
-                                            $booking->status_submission ==
-                                            'Returned')
-                                            <span class="text-success">Confirmed</span>
+                                            @elseif ($booking->status_submission == 'Confirmed')
+                                            <span class="text-info">Barang telah diserahkan</span>
+                                            @elseif ($booking->status_submission =='Returned')
+                                            <span class="text-success">Barang telah dikembalikan</span>
                                             @endif
                                         </div>
                                     </td>

@@ -20,6 +20,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-attachment: fixed; /* Add this line */
             height: 100vh;
             margin: 0;
         }
