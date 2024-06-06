@@ -31,16 +31,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('list', [ProfileController::class, 'data'])->name('list');
 });
 
-// Rute untuk mendapatkan data list profil
-Route::get('list', [ProfileController::class, 'data'])->name('list');
-
 // Rute untuk pengelolaan keranjang belanja
-Route::post('/cart/add/{id_barang}', [CartController::class, 'add'])->name('cart.add');
-Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
-Route::delete('/cart/delete/{id_keranjang}', [CartController::class, 'destroy'])->name('cart.destroy');
-Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/cart/add/{id_barang}', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
+    Route::delete('/cart/delete/{id_keranjang}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+});
 
 // Rute untuk pengelolaan booking
 Route::middleware(['auth'])->group(function () {
@@ -54,7 +54,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Rute untuk pengelolaan admin
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin_home', [AdminController::class, 'home'])->name('admin.home');
+Route::get('/admin_keuangan', [AdminController::class, 'keuangan'])->name('admin.keuangan');
+Route::get('/admin_pelanggan', [AdminController::class, 'pelanggan'])->name('admin.pelanggan');
+Route::get('/admin_transaksi', [AdminController::class, 'transaksi'])->name('admin.transaksi');
+Route::get('/admin_page1', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/admin/confirm/{id_booking}', [AdminController::class, 'confirmSubmission'])->name('admin.confirmSubmission');
 Route::post('/admin/bookings/confirm-return/{id_booking}', [AdminController::class, 'confirmReturn'])->name('admin.confirmReturn');
 Route::post('/admin/reject-submission/{id_booking}', [AdminController::class, 'rejectSubmission'])->name('admin.rejectSubmission');

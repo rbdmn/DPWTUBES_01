@@ -34,7 +34,7 @@ class BookingController extends Controller
             // Fetch the harga_barang from the barangs table
             $barang = Barang::find($keranjang->id_barang);
             if ($barang) {
-                $total_harga = $barang->harga_barang * $keranjang->jumlah_barang_sewa;
+                $total_harga = ($barang->harga_barang * $keranjang->jumlah_barang_sewa) * $keranjang->durasi;
                 $currentTimestamp = now(); // Get the current timestamp
 
                 // Calculate due date

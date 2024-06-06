@@ -39,11 +39,4 @@ class Booking extends Model
     const STATUS_RETURNED = 'Returned';
     const PAYMENT_UNPAID = 'Unpaid';
     const PAYMENT_PAID = 'Paid';
-
-    // const STATUS_PENDING = 'Pending';
-    // const STATUS_CONFIRMED = 'Confirmed';
-    // const STATUS_RETURN_REQUESTED = 'Return Requested';
-    // const STATUS_RETURNED = 'Returned';
-    // const PAYMENT_UNPAID = 'Unpaid';
-    // const PAYMENT_PAID = 'Paid';
 }
