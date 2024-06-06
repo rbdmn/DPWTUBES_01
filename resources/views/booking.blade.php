@@ -112,7 +112,7 @@
                                         method="POST" style="display:inline-block;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
                                     </form>
                                     @elseif ($booking->status_submission == 'Confirmed' && $booking->status_payment
                                     == 'Paid')

@@ -23,7 +23,7 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id_booking);
         $booking->delete();
-        return redirect()->back()->with('success', 'Item deleted successfully');
+        return redirect()->back()->with('success', 'Item canceled successfully');
     }
 
     public function store(Request $request)
