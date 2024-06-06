@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin - Bookings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
@@ -69,20 +66,16 @@
         .custom-container {
             max-width: 1600px;
             /* Adjust as needed */
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
+            /* Center the container */
             padding-left: 1.5rem;
-            /* sm:px-6 */
             padding-right: 1.5rem;
-            /* sm:px-6 */
         }
 
         @media (min-width: 1024px) {
             .custom-container {
                 padding-left: 2rem;
-                /* lg:px-8 */
                 padding-right: 2rem;
-                /* lg:px-8 */
             }
         }
     </style>
@@ -90,10 +83,11 @@
 
 <body>
 
-    <div class="custom-container">
+    <div class="custom-container mt-5">
+        <!-- Added mt-5 for top margin -->
         <div class="card">
             <div class="card-header">
-                <h2 style="text-align: center">HALAMAN ADMIN</h2>
+                <h2 style="text-align: center">REPORT PERSETUJUAN</h2>
             </div>
             <div class="card-body">
                 @if (session('success'))
@@ -160,7 +154,8 @@
                                         <form action="{{ route('admin.confirmSubmission', $booking->id_booking) }}"
                                             method="POST" style="display:inline-block;">
                                             @csrf
-                                            <button type="submit" class="btn btn-success btn-sm">Serahkan Barang</button>
+                                            <button type="submit" class="btn btn-success btn-sm">Serahkan
+                                                Barang</button>
                                         </form>
                                         @elseif ($booking->status_submission == 'Return Requested')
                                         <form action="{{ route('admin.confirmReturn', $booking->id_booking) }}"
@@ -172,7 +167,8 @@
                                         <form action="{{ route('admin.rejectSubmission', $booking->id_booking) }}"
                                             method="POST" style="display:inline-block;">
                                             @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm">Tolak Peminjaman</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Tolak
+                                                Peminjaman</button>
                                         </form>
                                         @elseif ($booking->status_submission == 'Returned')
                                         <span class="text-success">Returned</span>
@@ -180,16 +176,20 @@
                                     </div>
                                 </td>
                                 <td>
-                                    @if (($booking->status_submission == 'Pending' && $booking->status_payment == 'Paid'))
+                                    @if (($booking->status_submission == 'Pending' && $booking->status_payment ==
+                                    'Paid'))
                                     <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Submission Invoice</a>
-                                    @elseif ($booking->status_submission == 'Return Requested' && $booking->status_payment == 'Paid')
+                                    @elseif ($booking->status_submission == 'Return Requested' &&
+                                    $booking->status_payment == 'Paid')
                                     <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Return Invoice</a>
-                                    @elseif ($booking->status_submission == 'Confirmed' && $booking->status_payment == 'Paid')
+                                    @elseif ($booking->status_submission == 'Confirmed' && $booking->status_payment ==
+                                    'Paid')
                                     <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Submission Invoice</a>
-                                    @elseif ($booking->status_submission == 'Returned' && $booking->status_payment == 'Paid')
+                                    @elseif ($booking->status_submission == 'Returned' && $booking->status_payment ==
+                                    'Paid')
                                     <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Return Invoice</a>
                                     @endif
@@ -197,14 +197,21 @@
                             </tr>
                             @endforeach
                         </tbody>
-                    </table>                    
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.umd.min.js"></script>
+        <div class="text-center mt-3">
+            <!-- Added mt-3 for top margin -->
+            <a href="page1.html" class="btn btn-primary mx-2">Report Pelanggan</a>
+            <a href="page2.html" class="btn btn-primary mx-2">Report Transaksi</a>
+            <a href="page2.html" class="btn btn-primary mx-2">Report Keuangan</a>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.umd.min.js">
+        </script>
 </body>
 
 </html>

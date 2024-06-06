@@ -114,9 +114,9 @@
                 <div class="p-6">
                     <!-- Existing Table -->
                     <table class="table table-bordered table-hover mb-4">
-                        <thead>
+                        <thead class="bg-dark text-white">
                             <tr>
-                                <th scope="col">No</th>
+                                <th scope="col">#</th>
                                 <th scope="col">Nama Barang</th>
                                 <th scope="col">Total Harga</th>
                                 <th scope="col">Status Submission</th>
@@ -129,7 +129,7 @@
                         <tbody>
                             @foreach ($bookings as $booking)
                             <tr>
-                                <th scope="row">{{ $loop->iteration }}</th>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $booking->nama_barang }}</td>
                                 <td>Rp {{ number_format($booking->total_harga, 2) }}</td>
                                 <td>{{ $booking->status_submission }}</td>
