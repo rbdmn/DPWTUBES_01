@@ -24,7 +24,7 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id_booking);
         $booking->delete();
-        return redirect()->back()->with('success', 'Item canceled successfully');
+        return redirect()->back()->with('success', 'Booking di cancel dengan sukses');
     }
 
     // Menyimpan pemesanan dari keranjang ke dalam database
@@ -60,26 +60,26 @@ class BookingController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'All items have been submitted!');
+        return redirect()->back()->with('success', 'Semua pemesanan pada keranjang telah berhasil di kirim!');
     }
 
     // Memperbarui status pembayaran pemesanan
     public function updatePaymentStatus($id_booking)
     {
         $booking = Booking::find($id_booking);
-        if ($booking && $booking->status_payment == Booking::PAYMENT_UNPAID) {
-            $booking->status_payment = Booking::PAYMENT_PAID;
+        if ($booking && $booking->status_payment == 'Unpaid') {
+            $booking->status_payment = 'Paid';
             $booking->save();
         }
 
-        return redirect()->route('booking')->with('success', 'Payment status updated successfully!');
+        return redirect()->route('booking')->with('success', 'Pembayaran sukses!');
     }
 
     // Melakukan pengembalian barang
     public function returnItem($id_booking)
     {
         $booking = Booking::find($id_booking);
-        if ($booking && $booking->status_submission == Booking::STATUS_CONFIRMED) {
+        if ($booking && $booking->status_submission == 'Confirmed') {
             // Logika untuk menangani tindakan pengembalian
             $booking->status_submission = 'Returned';
             $booking->save();
@@ -104,6 +104,8 @@ class BookingController extends Controller
     public function generateSubmissionInvoice($id_booking)
     {
         $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
+
+        // Kondisi ini untuk error handling jika booking tidak ditemukan
         if (!$booking) {
             return redirect()->route('booking')->with('error', 'Booking tidak ketemu.');
         }
@@ -116,6 +118,8 @@ class BookingController extends Controller
     public function generateReturnInvoice($id_booking)
     {
         $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
+
+        // Kondisi ini untuk error handling jika booking tidak ditemukan
         if (!$booking) {
             return redirect()->route('booking')->with('error', 'Booking tidak ketemu.');
         }

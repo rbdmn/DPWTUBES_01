@@ -144,7 +144,7 @@
                                     <th scope="col">Status</th>
                                     <th scope="col">Pembayaran</th>
                                     <th scope="col">Batas Waktu</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Aksi</th>
                                     <th scope="col">Download Bukti PDF</th>
                                 </tr>
                             </thead>
@@ -159,20 +159,20 @@
                                         @if ($booking->status_submission == 'Pending')
                                         <span class="badge bg-warning text-dark">Pending</span>
                                         @elseif ($booking->status_submission == 'Return Requested')
-                                        <span class="badge bg-warning text-dark">Return Requested</span>
+                                        <span class="badge bg-warning text-dark">Permohonan kembalikan barang</span>
                                         @elseif ($booking->status_submission == 'Returned')
-                                        <span class="badge bg-success">Returned</span>
+                                        <span class="badge bg-success">Barang telah dikembalikan</span>
                                         @elseif ($booking->status_submission == 'Confirmed')
-                                        <span class="badge bg-info">Confirmed</span>
+                                        <span class="badge bg-info">Barang telah diserahkan</span>
                                         @elseif ($booking->status_submission == 'Rejected')
-                                        <span class="badge bg-danger">Rejected</span>
+                                        <span class="badge bg-danger">Ditolak</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if ($booking->status_payment == 'Paid')
-                                        <span class="badge bg-success">Paid</span>
+                                        <span class="badge bg-success">Sudah bayar</span>
                                         @else
-                                        <span class="badge bg-warning text-dark">Unpaid</span>
+                                        <span class="badge bg-warning text-dark">Belum bayar</span>
                                         @endif
                                     </td>
                                     <td>
@@ -217,14 +217,14 @@
                                         ($booking->status_submission == 'Confirmed' && $booking->status_payment ==
                                         'Paid'))
                                         <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
-                                            class="btn btn-info btn-sm">Download Submission Invoice</a>
+                                            class="btn btn-info btn-sm">Download Bukti Penyerahan</a>
                                         @elseif (($booking->status_submission == 'Return Requested' &&
                                         $booking->status_payment ==
                                         'Paid') || ($booking->status_submission == 'Returned' &&
                                         $booking->status_payment ==
                                         'Paid'))
                                         <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
-                                            class="btn btn-info btn-sm">Download Return Invoice</a>
+                                            class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
                                         @endif
                                     </td>
                                 </tr>

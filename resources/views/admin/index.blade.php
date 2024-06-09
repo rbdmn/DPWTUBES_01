@@ -179,19 +179,19 @@
                                     @if (($booking->status_submission == 'Pending' && $booking->status_payment ==
                                     'Paid'))
                                     <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
-                                        class="btn btn-info btn-sm">Download Submission Invoice</a>
+                                        class="btn btn-info btn-sm">Download Bukti Penyerahan</a>
                                     @elseif ($booking->status_submission == 'Return Requested' &&
                                     $booking->status_payment == 'Paid')
                                     <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
-                                        class="btn btn-info btn-sm">Download Return Invoice</a>
+                                        class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
                                     @elseif ($booking->status_submission == 'Confirmed' && $booking->status_payment ==
                                     'Paid')
                                     <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
-                                        class="btn btn-info btn-sm">Download Submission Invoice</a>
+                                        class="btn btn-info btn-sm">Download Bukti Penyerahan</a>
                                     @elseif ($booking->status_submission == 'Returned' && $booking->status_payment ==
                                     'Paid')
                                     <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
-                                        class="btn btn-info btn-sm">Download Return Invoice</a>
+                                        class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
                                     @endif
                                 </td>
                             </tr>

@@ -129,7 +129,7 @@
                                 <th scope="col">Status Submission</th>
                                 <th scope="col">Status Payment</th>
                                 <th scope="col">Batas Waktu</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Aksi</th>
                                 <th scope="col">Download Bukti PDF</th>
                             </tr>
                         </thead>
@@ -155,7 +155,7 @@
                                     @if ($booking->status_payment == 'Unpaid')
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#paymentModal"
-                                        onclick="setBookingId({{ $booking->id_booking }})">Pay</button>
+                                        onclick="setBookingId({{ $booking->id_booking }})">Bayar</button>
                                     <form action="{{ route('booking.destroy', $booking->id_booking) }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
@@ -167,23 +167,23 @@
                                     <form action="{{ route('bookings.requestReturn', $booking->id_booking) }}"
                                         method="POST" style="display:inline-block;">
                                         @csrf
-                                        <button type="submit" class="btn btn-warning btn-sm">Request Return</button>
+                                        <button type="submit" class="btn btn-warning btn-sm">Permohonan kembalikan barang</button>
                                     </form>
                                     @elseif ($booking->status_submission == 'Returned')
-                                    <span class="text-success">Returned</span>
+                                    <span class="text-success">Sudah dikembalikan</span>
                                     @else
-                                    <span class="text-success">Paid</span>
+                                    <span class="text-success">Sudah Bayar</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if (($booking->status_submission == 'Confirmed' && $booking->status_payment ==
                                     'Paid'))
                                     <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
-                                        class="btn btn-info btn-sm">Download Submission Invoice</a>
+                                        class="btn btn-info btn-sm">Download Bukti Penyerahan</a>
                                     @elseif ($booking->status_submission == 'Returned' && $booking->status_payment ==
                                     'Paid')
                                     <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
-                                        class="btn btn-info btn-sm">Download Return Invoice</a>
+                                        class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
                                     @endif
                                 </td>
                             </tr>

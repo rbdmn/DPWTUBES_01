@@ -15,12 +15,12 @@ class AdminController extends Controller
     public function home()
     {
         $paidBookings = Booking::with('user')
-            ->where('status_payment', Booking::PAYMENT_PAID)
+            ->where('status_payment', 'Paid')
             ->whereIn('status_submission', [
-                Booking::STATUS_PENDING,
-                Booking::STATUS_RETURN_REQUESTED,
-                Booking::STATUS_CONFIRMED,
-                Booking::STATUS_RETURNED,
+                'Pending',
+                'Return Requested',
+                'Confirmed',
+                'Returned',
             ])
             ->get();
 
@@ -60,35 +60,35 @@ class AdminController extends Controller
     public function confirmSubmission($id_booking)
     {
         $booking = Booking::find($id_booking);
-        if ($booking && $booking->status_payment == Booking::PAYMENT_PAID) {
-            $booking->status_submission = Booking::STATUS_CONFIRMED;
+        if ($booking && $booking->status_payment == 'Paid') {
+            $booking->status_submission = 'Confirmed';
             $booking->save();
         }
 
-        return redirect()->route('admin.home')->with('success', 'Submission confirmed successfully!');
+        return redirect()->route('admin.home')->with('success', 'Penyerahan telah berhasil di konfirm!');
     }
 
     // Mengonfirmasi pengembalian barang
     public function confirmReturn($id_booking)
     {
         $booking = Booking::find($id_booking);
-        if ($booking && $booking->status_submission == Booking::STATUS_RETURN_REQUESTED) {
-            $booking->status_submission = Booking::STATUS_RETURNED;
+        if ($booking && $booking->status_submission == 'Return Requested') {
+            $booking->status_submission = 'Returned';
             $booking->save();
         }
 
-        return redirect()->route('admin.home')->with('success', 'Return confirmed successfully!');
+        return redirect()->route('admin.home')->with('success', 'Pengembalian telah berhasil di konfirm!');
     }
 
     // Menolak penerimaan pemesanan
     public function rejectSubmission($id_booking)
     {
         $booking = Booking::find($id_booking);
-        if ($booking && $booking->status_submission == Booking::STATUS_PENDING) {
+        if ($booking && $booking->status_submission == 'Pending') {
             $booking->status_submission = 'Rejected';
             $booking->save();
         }
 
-        return redirect()->route('admin.home')->with('success', 'Loan submission has been rejected.');
+        return redirect()->route('admin.home')->with('success', 'Penyerahan telah berhasil di tolak.');
     }
 }

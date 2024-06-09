@@ -32,11 +32,4 @@ class Booking extends Model
     {
         return $this->belongsTo(Keranjang::class, 'id_keranjang', 'id_keranjang');
     }
-
-    const STATUS_PENDING = 'Pending';
-    const STATUS_CONFIRMED = 'Confirmed';
-    const STATUS_RETURN_REQUESTED = 'Return Requested';
-    const STATUS_RETURNED = 'Returned';
-    const PAYMENT_UNPAID = 'Unpaid';
-    const PAYMENT_PAID = 'Paid';
 }
