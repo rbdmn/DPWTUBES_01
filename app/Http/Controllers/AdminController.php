@@ -39,7 +39,11 @@ class AdminController extends Controller
     // Menampilkan halaman daftar pelanggan user
     public function pelanggan()
     {
-        $pelanggan = User::all(); // Mengambil semua data pelanggan
+        $pelanggan = User::leftJoin('bookings', 'users.id', '=', 'bookings.id_user')
+                        ->select('users.*', DB::raw('COUNT(bookings.id_booking) as total_booking'))
+                        ->groupBy('users.id')
+                        ->get();
+
         return view('admin.pelanggan', compact('pelanggan'));
     }
 

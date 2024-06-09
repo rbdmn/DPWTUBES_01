@@ -140,6 +140,7 @@
                                     <th scope="col">No</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Email</th>
+                                    <th scope="col">Total Pembelian</th> <!-- New column header -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -148,6 +149,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
+                                    <td>{{ $user->total_booking }}</td> <!-- Display count of paid bookings -->
                                 </tr>
                                 @endforeach
                             </tbody>

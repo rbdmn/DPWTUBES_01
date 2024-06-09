@@ -225,58 +225,24 @@
         </figcaption>
     </figure>
 
-    {{-- testimonial --}}
+    <!-- User Review Section -->
     <div class="gtco-testimonials">
-        <h2>Terbukti Website Keren</h2>
+        <h2>Testimoni Pelanggan</h2>
         <div class="owl-carousel owl-carousel1 owl-theme">
+            @foreach ($testimonials as $testimonial)
             <div>
-                <div class="card text-center"><img class="card-img-top"
-                        src="{{ asset('images/deddycorubir.jpg') }}"
-                        alt="">
+                <div class="card text-center">
+                    <img class="card-img-top" src="{{ asset('images/defaultprofile.jpg') }}"
+                        alt="{{ $testimonial->user->name }}">
                     <div class="card-body">
-                        <h5>Daddy<br />
-                            <span> Presenter </span>
+                        <h5>{{ $testimonial->user->name }}<br />
+                            <span>{{ $testimonial->user->occupation ?? 'User' }}</span>
                         </h5>
-                        <p class="card-text">“ keren banget cuy, saya bangga ” </p>
+                        <p class="card-text">{{ $testimonial->content }}</p>
                     </div>
                 </div>
             </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top"
-                        src="{{ asset('images/komeng.jpg') }}"
-                        alt="">
-                    <div class="card-body">
-                        <h5>Mengko<br />
-                            <span> Pimpinan </span>
-                        </h5>
-                        <p class="card-text">“ jadi pengen camping ” </p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top"
-                        src="{{ asset('images/radit.jpeg') }}"
-                        alt="">
-                    <div class="card-body">
-                        <h5>Radit<br />
-                            <span> Komedian </span>
-                        </h5>
-                        <p class="card-text">“ rentalboss sudah terverifikasi oleh saya ” </p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="card text-center"><img class="card-img-top"
-                        src="{{ asset('images/dea.jpeg') }}"
-                        alt="">
-                    <div class="card-body">
-                        <h5>Rizal<br />
-                            <span> Programmer </span>
-                        </h5>
-                        <p class="card-text">“ panutan saya ini ” </p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
@@ -300,12 +266,42 @@
                                 </figure>
                                 <div class="block-4-text p-4">
                                     <h3>{{ $barang->nama_barang }}</h3>
-                                    <p class="text-black-50 mb-0">Harga: Rp {{ number_format($barang->harga_barang, 2)
+                                    <p class="text-black-50 mb-0">Harga per hari: Rp {{
+                                        number_format($barang->harga_barang, 2)
                                         }}</p>
                                 </div>
                             </div>
                         </div>
                         @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonial Form -->
+    <div class="container mt-5 mb-5">
+        <!-- Menambahkan margin ke bawah agar tidak menyentuh footer -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Review</div>
+
+                    <div class="card-body">
+                        @if(session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+                        <form action="{{ route('testimonials.store') }}" method="POST">
+                            @csrf
+
+                            <div class="form-group">
+                                <label for="content">Ulasan saya:</label>
+                                <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-warning">Kirim</button>
+                        </form>
                     </div>
                 </div>
             </div>

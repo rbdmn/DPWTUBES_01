@@ -25,6 +25,7 @@ Route::get('/', function () {
 
 // Route menuju dashboard user
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/testimonials', [DashboardController::class, 'storeTestimonial'])->name('testimonials.store');
 
 // Rute untuk pengelolaan profil user
 Route::middleware('auth')->group(function () {
