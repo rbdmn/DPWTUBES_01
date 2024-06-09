@@ -45,7 +45,7 @@
             <div class="form-group">
                 <input class="form-control" id="password" type="password" name="password" required autocomplete="new-password" placeholder="{{ __('Password') }}">
                 @error('password')
-                    <span class="text-danger">{{ $message }}</span>
+                    <span class="text-danger">Password harus lebih dari 8 karakter</span>
                 @enderror
             </div>
 
@@ -53,7 +53,7 @@
             <div class="form-group">
                 <input class="form-control" id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="{{ __('Confirm Password') }}">
                 @error('password_confirmation')
-                    <span class="text-danger">{{ $message }}</span>
+                    <span class="text-danger">Password harus lebih dari 8 karakter</span>
                 @enderror
             </div>
 

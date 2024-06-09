@@ -50,8 +50,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Tagihan</h1>
-            <p>Tagihan untuk pengembalian barang</p>
+            <h1>Bukti Pengembalian</h1>
+            <p>Bukti untuk pengembalian barang</p>
         </div>
         <div class="content">
             <table>
@@ -76,8 +76,8 @@
                     <td>Rp {{ number_format($booking->total_harga, 2) }}</td>
                 </tr>
                 <tr>
-                    <th>Sewa Kapan</th>
-                    <td>{{ $booking->created_at }}</td>
+                    <th>Batas Waktu Berakhir</th>
+                    <td>{{ $booking->due_date }}</td>
                 </tr>
                 <tr>
                     <th>Status Submission</th>

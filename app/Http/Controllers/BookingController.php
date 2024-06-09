@@ -85,7 +85,7 @@ class BookingController extends Controller
             $booking->save();
         }
 
-        return redirect()->route('booking')->with('success', 'Item returned successfully!');
+        return redirect()->route('booking')->with('success', 'Penyerahan barang sukses!');
     }
 
     // Meminta pengembalian barang
@@ -97,7 +97,7 @@ class BookingController extends Controller
             $booking->save();
         }
 
-        return redirect()->route('booking')->with('success', 'Return requested successfully!');
+        return redirect()->route('booking')->with('success', 'Pengembalian barang sukses!');
     }
 
     // Membuat invoice pemesanan
@@ -105,11 +105,11 @@ class BookingController extends Controller
     {
         $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
         if (!$booking) {
-            return redirect()->route('booking')->with('error', 'Booking not found.');
+            return redirect()->route('booking')->with('error', 'Booking tidak ketemu.');
         }
 
         $pdf = PDF::loadView('invoices.submission', compact('booking'));
-        return $pdf->download('submission_invoice_' . $booking->id_booking . '.pdf');
+        return $pdf->download('Bukti_Penyerahan[' . $booking->nama_barang . '].pdf');
     }
 
     // Membuat invoice pengembalian barang
@@ -117,10 +117,10 @@ class BookingController extends Controller
     {
         $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
         if (!$booking) {
-            return redirect()->route('booking')->with('error', 'Booking not found.');
+            return redirect()->route('booking')->with('error', 'Booking tidak ketemu.');
         }
 
         $pdf = Pdf::loadView('invoices.return', compact('booking'));
-        return $pdf->download('return_invoice_' . $booking->id_booking . '.pdf');
+        return $pdf->download('Bukti_Pengembalian[' . $booking->nama_barang . '].pdf');
     }
 }

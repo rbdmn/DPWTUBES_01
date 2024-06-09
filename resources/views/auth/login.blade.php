@@ -41,25 +41,12 @@
                 @enderror
             </div>
 
-            <!-- Remember Me -->
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember_me">
-                    <label class="form-check-label" for="remember_me">{{ __('Remember me') }}</label>
-                </div>
-            </div>
-
             <!-- Login Button -->
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit">{{ __('Log in') }}</button>
             </div>
 
-            <!-- Forgot Password Link -->
-            @if (Route::has('password.request'))
-                <a class="forgot" href="{{ route('password.request') }}">
-                    {{ __('Forgot your email or password?') }}
-                </a>
-            @endif
+            <a href="{{ route('register') }}" class="forgot">{{ __('Belum punya akun? Register disini') }}</a>
         </form>
     </div>
 

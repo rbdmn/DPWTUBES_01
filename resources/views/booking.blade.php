@@ -20,7 +20,8 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* Add this line */
+            background-attachment: fixed;
+            /* Add this line */
             height: 100vh;
             margin: 0;
         }
@@ -114,6 +115,11 @@
 
                 <div class="p-6">
                     <!-- Existing Table -->
+                    @if ($bookings->isEmpty())
+                    <div class="alert alert-info" role="alert">
+                        <p style="text-align: center">Belum ada booking</p>
+                    </div>
+                    @else
                     <table class="table table-bordered table-hover mb-4">
                         <thead class="bg-dark text-white">
                             <tr>
@@ -183,6 +189,8 @@
                             </tr>
                             @endforeach
                         </tbody>
+                    </table>
+                    @endif
                     </table>
                 </div>
             </div>
