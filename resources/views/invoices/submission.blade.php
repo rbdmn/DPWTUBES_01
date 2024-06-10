@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Invoice Submission</title>
+    <title>Bukti Penyerahan</title>
     <style>
         body {
             font-family: 'Arial, sans-serif';
@@ -76,18 +76,23 @@
                     <td>Rp {{ number_format($booking->total_harga, 2) }}</td>
                 </tr>
                 <tr>
-                    <th>Batas Waktu Berakhir</th>
+                    <th>Batas Waktu Dikembalikan</th>
                     <td>{{ $booking->due_date }}</td>
                 </tr>
-                <tr>
-                    <th>Status Submission</th>
-                    <td>{{ $booking->status_submission }}</td>
-                </tr>
-                <tr>
-                    <th>Status Payment</th>
-                    <td>{{ $booking->status_payment }}</td>
-                </tr>
             </table>
+            <br>
+            <br>
+            <p>Dengan hormat,<br><br>
+                Pada hari dan jam {{ $booking->created_at }}, pihak pengurus legislatif telah menyerahkan {{ $booking->nama_barang }} sebanyak {{ $booking->keranjang->jumlah_barang_sewa }} kepada saudara/i {{ $booking->user->name }}. 
+                <br><br> Dengan penyerahan barang ini, saudara/i bertanggung jawab penuh atas barang yang telah diterima. Mohon untuk tidak menggandakan atau meminjamkan barang tersebut kepada pihak yang tidak berkepentingan.
+                
+                <br><br> Atas perhatian dan kerjasamanya, kami ucapkan terima kasih.
+                
+                <br><br> Hormat kami,
+                
+                <br><br> RENTALBOSS OWNER, BOSS Erlangga.
+                
+                </p>
         </div>
         <div class="footer">
             <p>&copy; 2024 RENTALBOSS. Seluruh hak cipta.</p>

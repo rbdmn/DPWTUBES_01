@@ -50,8 +50,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/bookings/delete/{id_booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
     Route::post('/bookings/update-payment-status/{id_booking}', [BookingController::class, 'updatePaymentStatus'])->name('bookings.updatePaymentStatus');
     Route::post('/bookings/request-return/{id_booking}', [BookingController::class, 'requestReturn'])->name('bookings.requestReturn');
-    Route::get('/bookings/invoice/submission/{id_booking}', [BookingController::class, 'generateSubmissionInvoice'])->name('bookings.generateSubmissionInvoice');
-    Route::get('/bookings/invoice/return/{id_booking}', [BookingController::class, 'generateReturnInvoice'])->name('bookings.generateReturnInvoice');
+    Route::get('/bookings/invoice/submission/{id_booking}', [BookingController::class, 'MembuatFakturPengiriman'])->name('bookings.MembuatFakturPengiriman');
+    Route::get('/bookings/invoice/return/{id_booking}', [BookingController::class, 'MembuatFakturPengembalian'])->name('bookings.MembuatFakturPengembalian');
 });
 
 // Rute untuk pengelolaan admin

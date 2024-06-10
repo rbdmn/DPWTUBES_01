@@ -26,12 +26,16 @@
         .table thead th {
             vertical-align: middle;
             text-align: center;
+            background-color: rgba(71, 107, 69, 0.8); /* Grey foresty vibe color */
+            color: white; /* Text color for thead */
+            border: 1px solid black; /* Black border */
         }
 
         .table tbody td {
             vertical-align: middle;
             text-align: center;
             padding: 10px;
+            border: 1px solid black; /* Black border */
         }
 
         .table img {
@@ -54,16 +58,11 @@
 
 <body>
     <x-app-layout>
-        <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight" style="text-align: center">
-                {{ __('List Produk') }}
-            </h2>
-        </x-slot>
 
         <div class="bg-darkgrey py-12"
             style="background-image: url('startbootstrap-grayscale-gh-pages/assets/img/campsite.jpg'); background-color: rgba(0, 0, 0, 0.5); background-blend-mode: multiply; background-size: cover; background-position: center;">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-forest-green overflow-hidden shadow-sm sm:rounded-lg">
                     @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -80,8 +79,8 @@
 
                     <img src="https://fastly.picsum.photos/id/10/2500/700.jpg?hmac=-V8-VKooViy76bhIeIrdDOmdmtT6xTIiA3U2ff3hKcI"
                         class="img-fluid" alt="test">
-                    <div class="p-6">
-                        <h2>List Produk beserta kredensialnya:</h2>
+                    <div class="p-6" style="background-color: rgba(71, 107, 69, 0.8);">
+                        <h1 style="color: white; text-align: center;">List Produk beserta harga per harinya</h1>
                         <br>
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -90,13 +89,13 @@
                                     <th scope="col">Nama Barang</th>
                                     <th scope="col">Harga Sewa Barang per hari</th>
                                     <th scope="col">Foto</th>
-                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Kuantitas</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
                                 @foreach ($list as $item)
                                 <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td scope="row">{{ $loop->iteration }}</td>
                                     <td>{{ $item->nama_barang }}</td>
                                     <td>Rp {{ number_format($item->harga_barang, 2) }}</td>
                                     <td>

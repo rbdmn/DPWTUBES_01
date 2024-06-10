@@ -90,6 +90,7 @@ class AdminController extends Controller
         $booking = Booking::find($id_booking);
         if ($booking && $booking->status_submission == 'Pending') {
             $booking->status_submission = 'Rejected';
+            $booking->status_payment = 'Uang Dibalikkan';
             $booking->save();
         }
 

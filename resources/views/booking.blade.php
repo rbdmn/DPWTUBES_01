@@ -99,11 +99,6 @@
 
 <body>
     <x-app-layout>
-        <x-slot name="header">
-            <h2 class="font-semibold text-xl text-white leading-tight" style="text-align: center">
-                {{ __('Booking') }}
-            </h2>
-        </x-slot>
 
         <div class="custom-container">
             <div class="bg-darkgrey shadow-sm sm:rounded-lg overflow-hidden">
@@ -126,8 +121,8 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Nama Barang</th>
                                 <th scope="col">Total Harga</th>
-                                <th scope="col">Status Submission</th>
-                                <th scope="col">Status Payment</th>
+                                <th scope="col">Status Submisi</th>
+                                <th scope="col">Status Pembayaran</th>
                                 <th scope="col">Batas Waktu</th>
                                 <th scope="col">Aksi</th>
                                 <th scope="col">Download Bukti PDF</th>
@@ -178,11 +173,11 @@
                                 <td>
                                     @if (($booking->status_submission == 'Confirmed' && $booking->status_payment ==
                                     'Paid'))
-                                    <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
+                                    <a href="{{ route('bookings.MembuatFakturPengiriman', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Bukti Penyerahan</a>
                                     @elseif ($booking->status_submission == 'Returned' && $booking->status_payment ==
                                     'Paid')
-                                    <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
+                                    <a href="{{ route('bookings.MembuatFakturPengembalian', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
                                     @endif
                                 </td>

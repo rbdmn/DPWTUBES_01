@@ -30,10 +30,13 @@ class BookingController extends Controller
     // Menyimpan pemesanan dari keranjang ke dalam database
     public function store(Request $request)
     {
-        $keranjangs = Keranjang::where('id_user', Auth::id())->where('sudah_book', false)->get();
+        $id_keranjang = $request->input('id_keranjang');
+        $keranjang = Keranjang::where('id_keranjang', $id_keranjang)
+            ->where('id_user', Auth::id())
+            ->where('sudah_book', false)
+            ->first();
 
-        foreach ($keranjangs as $keranjang) {
-            
+        if ($keranjang) {
             $barang = Barang::find($keranjang->id_barang);
             if ($barang) {
                 $total_harga = ($barang->harga_barang * $keranjang->jumlah_barang_sewa) * $keranjang->durasi;
@@ -60,8 +63,9 @@ class BookingController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Semua pemesanan pada keranjang telah berhasil di kirim!');
+        return redirect()->back()->with('success', 'Pemesanan telah berhasil dikirim!');
     }
+
 
     // Memperbarui status pembayaran pemesanan
     public function updatePaymentStatus($id_booking)
@@ -101,7 +105,7 @@ class BookingController extends Controller
     }
 
     // Membuat invoice pemesanan
-    public function generateSubmissionInvoice($id_booking)
+    public function MembuatFakturPengiriman($id_booking)
     {
         $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
 
@@ -111,11 +115,11 @@ class BookingController extends Controller
         }
 
         $pdf = PDF::loadView('invoices.submission', compact('booking'));
-        return $pdf->download('Bukti_Penyerahan[' . $booking->nama_barang . '].pdf');
+        return $pdf->download('Bukti_Penyerahan_' . $booking->user->name . '_.pdf');
     }
 
     // Membuat invoice pengembalian barang
-    public function generateReturnInvoice($id_booking)
+    public function MembuatFakturPengembalian($id_booking)
     {
         $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
 
@@ -125,6 +129,6 @@ class BookingController extends Controller
         }
 
         $pdf = Pdf::loadView('invoices.return', compact('booking'));
-        return $pdf->download('Bukti_Pengembalian[' . $booking->nama_barang . '].pdf');
+        return $pdf->download('Bukti_Pengembalian_' . $booking->user->name . '_.pdf');
     }
 }

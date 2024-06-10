@@ -76,18 +76,23 @@
                     <td>Rp {{ number_format($booking->total_harga, 2) }}</td>
                 </tr>
                 <tr>
-                    <th>Batas Waktu Berakhir</th>
+                    <th>Batas Waktu Dikembalikan</th>
                     <td>{{ $booking->due_date }}</td>
                 </tr>
-                <tr>
-                    <th>Status Submission</th>
-                    <td>{{ $booking->status_submission }}</td>
-                </tr>
-                <tr>
-                    <th>Status Payment</th>
-                    <td>{{ $booking->status_payment }}</td>
-                </tr>
             </table>
+            <br>
+            <br>
+            <p>Dengan hormat,<br><br>
+                Bahwa pada hari dan jam {{ $booking->updated_at }}, pihak pengurus legislatif telah menerima kembali {{ $booking->nama_barang }} sebanyak {{ $booking->keranjang->jumlah_barang_sewa }} dari saudara/i {{ $booking->user->name }}. 
+                <br><br> Dengan diterimanya kembali barang ini, pihak pengurus menyatakan bahwa saudara/i {{ $booking->user->name }} telah memenuhi tanggung jawab atas barang yang disewakan. 
+                
+                <br><br> Terima kasih atas kerja samanya, dan kami berharap dapat melayani Anda kembali di masa mendatang.
+                
+                <br><br> Hormat kami,
+                
+                <br><br> RENTALBOSS OWNER, BOSS Erlangga.
+                
+                </p>
         </div>
         <div class="footer">
             <p>&copy; 2024 RENTALBOSS. Seluruh hak cipta.</p>

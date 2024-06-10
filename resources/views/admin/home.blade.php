@@ -64,7 +64,7 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="{{route('admin.home')}}" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>RENTALBOSS</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -141,11 +141,10 @@
                                     <th scope="col">Nama Pelanggan</th>
                                     <th scope="col">Nama Barang</th>
                                     <th scope="col">Total Harga</th>
+                                    <th scope="col">Batas Waktu</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Pembayaran</th>
-                                    <th scope="col">Batas Waktu</th>
                                     <th scope="col">Aksi</th>
-                                    <th scope="col">Download Bukti PDF</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -155,6 +154,13 @@
                                     <td>{{ $booking->user->name }}</td>
                                     <td>{{ $booking->nama_barang }}</td>
                                     <td>Rp {{ number_format($booking->total_harga, 2) }}</td>
+                                    <td>
+                                        @if ($booking->due_date)
+                                        {{ \Carbon\Carbon::parse($booking->due_date)->format('d-m-Y H:i') }}
+                                        @else
+                                        N/A
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($booking->status_submission == 'Pending')
                                         <span class="badge bg-warning text-dark">Pending</span>
@@ -176,13 +182,6 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($booking->due_date)
-                                        {{ \Carbon\Carbon::parse($booking->due_date)->format('d-m-Y H:i') }}
-                                        @else
-                                        N/A
-                                        @endif
-                                    </td>
-                                    <td>
                                         <div class="d-inline-flex">
                                             @if ($booking->status_submission == 'Pending')
                                             <form action="{{ route('admin.confirmSubmission', $booking->id_booking) }}"
@@ -201,8 +200,7 @@
                                             <form action="{{ route('admin.confirmReturn', $booking->id_booking) }}"
                                                 method="POST">
                                                 @csrf
-                                                <button type="submit" class="btn btn-success btn-sm">Confirm
-                                                    Return</button>
+                                                <button type="submit" class="btn btn-success btn-sm">Konfirm Pengembalian</button>
                                             </form>
                                             @elseif ($booking->status_submission == 'Confirmed')
                                             <span class="text-info">Barang telah diserahkan</span>
@@ -210,22 +208,6 @@
                                             <span class="text-success">Barang telah dikembalikan</span>
                                             @endif
                                         </div>
-                                    </td>
-                                    <td>
-                                        @if (($booking->status_submission == 'Pending' && $booking->status_payment ==
-                                        'Paid') ||
-                                        ($booking->status_submission == 'Confirmed' && $booking->status_payment ==
-                                        'Paid'))
-                                        <a href="{{ route('bookings.generateSubmissionInvoice', $booking->id_booking) }}"
-                                            class="btn btn-info btn-sm">Download Bukti Penyerahan</a>
-                                        @elseif (($booking->status_submission == 'Return Requested' &&
-                                        $booking->status_payment ==
-                                        'Paid') || ($booking->status_submission == 'Returned' &&
-                                        $booking->status_payment ==
-                                        'Paid'))
-                                        <a href="{{ route('bookings.generateReturnInvoice', $booking->id_booking) }}"
-                                            class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
-                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -245,7 +227,7 @@
                 <div class="bg-secondary rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">RENTALBOSS</a>, All Right Reserved.
+                            &copy; <a href="{{route('admin.home')}}">RENTALBOSS</a>, All Right Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
