@@ -127,7 +127,7 @@
             <!-- Navbar End -->
 
 
-            <!-- Booking Start -->
+            <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
@@ -212,11 +212,14 @@
                                         </div>
                                     </td>
                                     <td>
+                                        @if ($booking->status_submission != 'Permintaan Pengembalian')
                                         <a href="{{ url('bukti_pembayaran/' . $booking->bukti_pembayaran) }}"
                                             target="_blank" class="btn btn-info btn-sm">Lihat Bukti Pembayaran</a>
-                                        @if ($booking->status_submission == 'Permintaan Pengembalian')
+                                        @elseif ($booking->status_submission == 'Permintaan Pengembalian')
                                         <a href="{{ route('bookings.MembuatFakturBuktiPengembalianDariUserKeAdmin', $booking->id_booking) }}"
                                             class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
+                                        @else
+                                        <span class="text-danger">Tidak ada bukti</span>
                                         @endif
                                     </td>
                                 </tr>
@@ -226,7 +229,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Booking End -->
+            <!-- Recent Sales End -->
 
 
 
