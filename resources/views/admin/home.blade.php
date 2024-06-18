@@ -146,6 +146,7 @@
                                     <th scope="col">Pembayaran</th>
                                     <th scope="col">Aksi</th>
                                     <th scope="col">Bukti Pembayaran</th>
+                                    <th scope="col">Denda</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -220,6 +221,14 @@
                                             class="btn btn-info btn-sm">Download Bukti Permintaan</a>
                                         @else
                                         <span class="text-danger">Tidak ada bukti</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($booking->bukti_pembayaran_denda)
+                                        <a href="{{ url('bukti_pembayaran_denda/' . $booking->bukti_pembayaran_denda) }}"
+                                            target="_blank" class="btn btn-info btn-sm">Lihat Bukti Denda</a>
+                                        @else
+                                            <span class="text-danger">Tidak Ada</span>
                                         @endif
                                     </td>
                                 </tr>

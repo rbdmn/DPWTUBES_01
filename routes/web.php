@@ -44,6 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bookings/invoice/minta-pengembalian/{id_booking}', [BookingController::class, 'MembuatFakturBuktiPengembalianDariUserKeAdmin'])->name('bookings.MembuatFakturBuktiPengembalianDariUserKeAdmin');
     Route::get('/pembayaran/{id_keranjang}', [BookingController::class, 'showPaymentForm'])->name('payment');
     Route::post('/proses-pembayaran', [BookingController::class, 'processPayment'])->name('bookings.processPayment');
+    Route::get('/bookings/halamanbayardenda/{id}', [BookingController::class, 'payFineForm'])->name('bookings.payFineForm');
+    Route::post('/bookings/bayardenda/{id}', [BookingController::class, 'payFine'])->name('bookings.payFine');
 });
 
 // Rute untuk pengelolaan admin

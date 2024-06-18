@@ -142,7 +142,7 @@
                                     </div>
                                     <div class="col-md-12 d-flex justify-content-center mt-3">
                                         <!-- Each product has its own submit button -->
-                                        <a href="{{ route('payment', ['id_keranjang' => $item->id_keranjang]) }}" class="btn btn-lg submit-btn me-3">Bayar</a>
+                                        <a href="{{ route('payment', ['id_keranjang' => $item->id_keranjang]) }}" class="btn btn-lg submit-btn me-3">Bayar dan sewa sekarang</a>
                                         <!-- Delete action button -->
                                         <form action="{{ route('cart.destroy', $item->id_keranjang) }}" method="POST">
                                             @csrf
@@ -166,14 +166,6 @@
                             </div>
                         </div>
                         @endforelse
-
-                        @if ($mark === 0)
-                        <div class="card mb-4">
-                            <div class="card-body p-4 text-center">
-                                <p class="lead fw-normal mb-2">Keranjang Anda kosong.</p>
-                            </div>
-                        </div>
-                        @endif
                     </div>
                 </div>
             </div>

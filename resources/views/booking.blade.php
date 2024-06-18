@@ -158,19 +158,34 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($booking->status_submission == 'Sah' && $booking->status_payment ==
-                                    'Terbayar')
-                                    <form action="{{ route('bookings.requestReturn', $booking->id_booking) }}"
-                                        method="POST" style="display:inline-block;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-warning btn-sm">Permohonan kembalikan barang</button>
-                                    </form>
+                                    @if ($booking->status_submission == 'Sah' && $booking->status_payment == 'Terbayar')
+                                        @if ($booking->due_date && now() > $dueDate)
+                                            @php
+                                                // Menghitung jumlah hari terlambat
+                                                $dueDateObj = new DateTime($booking->due_date);
+                                                $now = new DateTime();
+                                                $diff = $now->diff($dueDateObj);
+                                                $daysLate = $diff->days;
+                                                
+                                                // Hitung denda
+                                                $denda = $daysLate * 100000;
+                                            @endphp
+                                            <form action="{{ route('bookings.payFineForm', $booking->id_booking) }}" method="GET" style="display:inline-block;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Bayar Denda (Rp {{ number_format($denda, 0, ',', '.') }})</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('bookings.requestReturn', $booking->id_booking) }}" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-warning btn-sm">Permohonan kembalikan barang</button>
+                                            </form>
+                                        @endif
                                     @elseif ($booking->status_submission == 'Telah Dikembalikan')
-                                    <span class="text-success">Sudah dikembalikan</span>
-                                    @else
-                                    <span class="text-success">Sudah Bayar</span>
+                                        <span class="text-success">Aman mantap</span>
+                                    @elseif ($booking->status_submission == 'Ditolak')
+                                        <span class="text-danger">Ditolak</span>
                                     @endif
-                                </td>
+                                </td>                                
                                 <td>
                                     @if (($booking->status_submission == 'Sah' && $booking->status_payment ==
                                     'Terbayar'))

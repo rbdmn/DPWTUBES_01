@@ -61,7 +61,7 @@
                 <button class="btn btn-primary btn-block" type="submit">{{ __('Register') }}</button>
             </div>
 
-            <a href="{{ route('login') }}" class="forgot">{{ __('Already registered?') }}</a>
+            <a href="{{ route('login') }}" class="forgot">{{ __('Sudah punya akun? Klik untuk login') }}</a>
         </form>
     </div>
 

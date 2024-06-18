@@ -9,6 +9,7 @@ use App\Models\Barang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -239,4 +240,52 @@ class BookingController extends Controller
         return redirect()->back()->with('error', 'Keranjang tidak ditemukan atau sudah dibooking.');
     }
 
+    public function payFineForm($id)
+    {
+        $booking = Booking::findOrFail($id);
+        return view('bayardenda', compact('booking'));
+    }
+
+    public function payFine(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+
+        // Validasi file gambar
+        $request->validate([
+            'bukti_pembayaran_denda' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+            // $file = $request->file('bukti_pembayaran_denda');
+            // $filename = time() . '_' . $file->getClientOriginalName();
+            // $file->storeAs('public/bukti_pembayaran_denda', $filename);
+
+        // Handle file upload
+        if ($request->hasFile('bukti_pembayaran_denda')) {
+            $imageName = time().'.'.$request->bukti_pembayaran_denda->extension();
+            $request->bukti_pembayaran_denda->move(public_path('bukti_pembayaran_denda'), $imageName);
+
+            // Menghitung jumlah hari terlambat
+            $dueDate = Carbon::parse($booking->due_date);
+            $now = Carbon::now();
+            $daysLate = $now->diffInDays($dueDate);
+
+            // Menghitung denda (misalnya, 100000 per hari terlambat)
+            $denda = $daysLate * 100000;
+
+            // Menambahkan denda ke total harga
+            $booking->total_harga += $denda;
+
+            // Simpan nama file bukti pembayaran denda ke dalam database
+            $booking->bukti_pembayaran_denda = $imageName;
+            $booking->status_submission = 'Permintaan Pengembalian';
+            $booking->save();
+
+            return redirect()->route('booking')->with('success', 'Pembayaran denda berhasil.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal mengunggah bukti pembayaran denda.');
+        }
+
+        // Redirect atau kembali ke halaman yang sesuai
+        return redirect()->route('booking')->with('success', 'Pembayaran denda berhasil.');
+    }
 }
