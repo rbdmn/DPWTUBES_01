@@ -13,85 +13,77 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.min.css" rel="stylesheet" />
     <style>
-        /* Custom background color */
+
         body {
             background-color: #f8f9fa;
-            background-image: url('{{ url('images/scenerynight.jpg') }}');
+            background-image: url('{{ url('images/wowo.jpg') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            /* Add this line */
             height: 100vh;
             margin: 0;
         }
 
-        /* Table styles */
         .table thead th {
-            background-color: #030303;
-            /* Dark background for table headers */
-            color: #fff;
-            /* White text color for table headers */
+            vertical-align: middle;
+            text-align: center;
+            background-color: rgba(71, 107, 69, 0.8);
+            color: white;
+            border: 1px solid black;
+        }
+
+        .table tbody td {
+            background-color: rgba(60, 61, 60, 0.8);
+            vertical-align: middle;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid black;
+            color: white;
         }
 
         .table tbody tr:hover {
             background-color: #f1f1f1;
-            /* Light background color on hover */
         }
 
-        /* Badge colors */
         .badge-pending {
             background-color: #ffc107;
-            /* Yellow color for pending status */
         }
 
         .badge-Sah,
         .badge-Terbayar {
             background-color: #28a745;
-            /* Green color for Sah and Terbayar status */
         }
 
         .badge-return-requested {
             background-color: #17a2b8;
-            /* Light blue color for Permintaan Pengembalian status */
         }
 
-        /* Action buttons */
         .table-actions .btn {
             color: #fff;
-            /* White text color for buttons */
         }
 
-        /* Modal background */
         .modal-content {
             background-color: #1b2f34;
-            /* Dark background for modal */
             color: #fff;
-            /* White text color for modal content */
         }
 
         .modal-body button.btn {
             background-color: #ffc107;
-            /* Yellow color for payment method buttons */
         }
 
         .custom-container {
             max-width: 1600px;
-            /* Adjust as needed */
             margin-left: auto;
             margin-right: auto;
             padding-left: 1.5rem;
-            /* sm:px-6 */
             padding-right: 1.5rem;
-            /* sm:px-6 */
         }
 
         @media (min-width: 1024px) {
             .custom-container {
                 padding-left: 2rem;
-                /* lg:px-8 */
                 padding-right: 2rem;
-                /* lg:px-8 */
             }
         }
     </style>
@@ -109,7 +101,6 @@
                 @endif
 
                 <div class="p-6">
-                    <!-- Existing Table -->
                     @if ($bookings->isEmpty())
                     <div class="alert alert-info" role="alert">
                         <p style="text-align: center">Belum ada booking</p>
@@ -121,9 +112,9 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Nama Barang</th>
                                 <th scope="col">Total Harga</th>
-                                <th scope="col">Status Submisi</th>
+                                <th scope="col">Status Barang</th>
                                 <th scope="col">Status Pembayaran</th>
-                                <th scope="col">Batas Waktu</th>
+                                <th scope="col">Batas Waktu Pengembalian</th>
                                 <th scope="col">Aksi</th>
                                 <th scope="col">Download Bukti PDF</th>
                             </tr>
@@ -134,8 +125,28 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $booking->nama_barang }}</td>
                                 <td>Rp {{ number_format($booking->total_harga, 2) }}</td>
-                                <td>{{ $booking->status_submission }}</td>
-                                <td>{{ $booking->status_payment }}</td>
+                                <td>
+                                    @if ($booking->status_submission == 'Pending')
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    @elseif ($booking->status_submission == 'Permintaan Pengembalian')
+                                    <span class="badge bg-warning text-dark">Permohonan kembalikan barang</span>
+                                    @elseif ($booking->status_submission == 'Telah Dikembalikan')
+                                    <span class="badge bg-success">Barang telah dikembalikan</span>
+                                    @elseif ($booking->status_submission == 'Sah')
+                                    <span class="badge bg-info">Barang telah diserahkan</span>
+                                    @elseif ($booking->status_submission == 'Ditolak')
+                                    <span class="badge bg-danger">Ditolak</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($booking->status_payment == 'Terbayar')
+                                    <span class="badge bg-success">Terbayar</span>
+                                    @elseif ($booking->status_submission == 'Ditolak')
+                                    <span class="badge bg-info">Uang Dibalikan</span>
+                                    @else
+                                    <span class="badge bg-warning text-dark">Belum bayar</span>
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($booking->due_date)
                                     @php

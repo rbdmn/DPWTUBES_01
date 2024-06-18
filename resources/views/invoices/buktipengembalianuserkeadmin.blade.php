@@ -88,8 +88,6 @@
                 Permintaan ini diajukan untuk dikonfirmasi oleh pihak admin.
                 <br><br> Mohon untuk memproses permintaan pengembalian ini sesegera mungkin.
 
-                <br><br> Atas perhatian dan kerjasamanya, kami ucapkan terima kasih.
-
                 {{-- <br><br> Hormat kami,
 
                 <br><br> RENTALBOSS OWNER, BOSS Erlangga. --}}

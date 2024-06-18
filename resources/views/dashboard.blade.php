@@ -200,29 +200,27 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8">
-                    <h2 class="text-white mb-4">Perkenalan diri</h2>
-                    <p class="text-white-50">
-                        Perkenalkan nama saya Abdurrahman Rauf Budiman dari kelas C2
-                    </p>
+                    
                 </div>
             </div>
             {{-- <img class="img-fluid" src="{{asset('startbootstrap-grayscale-gh-pages/assets/img/ipad.png')}}"
                 alt="..." /> --}}
         </div>
     </section>
-    <!-- Motivation Card -->
+
+    <!-- Motivasi -->
     <figure class="note note-secondary p-4">
         <blockquote class="blockquote">
             <p class="pb-2" style="text-align: center">
-                "Musuh terbesar dari pengetahuan bukanlah ketidakpedulian, tetapi ilusi mengenai pengetahuan."
+                "Make it work, make it right, make it fast."
             </p>
         </blockquote>
         <figcaption class="blockquote-footer mb-0" style="text-align: center">
-            Stephen Hawking
+            Kent Beck
         </figcaption>
     </figure>
 
-    <!-- User Review Section -->
+    <!-- Testimoni -->
     <div class="gtco-testimonials">
         <h2>Testimoni Pelanggan</h2>
         <div class="owl-carousel owl-carousel1 owl-theme">
@@ -243,7 +241,7 @@
         </div>
     </div>
 
-    <!-- Projects Section -->
+    <!-- Produk2 -->
     <div class="site-section block-3 site-blocks-2 bg-light">
         <div class="container">
             <div class="row justify-content-center">
@@ -276,9 +274,8 @@
         </div>
     </div>
 
-    <!-- Testimonial Form -->
+    <!-- Form Testimoni -->
     <div class="container mt-5 mb-5">
-        <!-- Menambahkan margin ke bawah agar tidak menyentuh footer -->
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -289,7 +286,7 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
 
-                        <form action="{{ route('testimonials.store') }}" method="POST">
+                        <form action="{{ route('tambah-testimoni') }}" method="POST">
                             @csrf
 
                             <div class="form-group">

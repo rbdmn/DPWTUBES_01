@@ -145,7 +145,7 @@
                                     <th scope="col">Status</th>
                                     <th scope="col">Pembayaran</th>
                                     <th scope="col">Aksi</th>
-                                    <th scope="col">Bukti Pembayaran</th> <!-- Tambahkan kolom ini -->
+                                    <th scope="col">Bukti Pembayaran</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -217,7 +217,7 @@
                                             target="_blank" class="btn btn-info btn-sm">Lihat Bukti Pembayaran</a>
                                         @elseif ($booking->status_submission == 'Permintaan Pengembalian')
                                         <a href="{{ route('bookings.MembuatFakturBuktiPengembalianDariUserKeAdmin', $booking->id_booking) }}"
-                                            class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
+                                            class="btn btn-info btn-sm">Download Bukti Permintaan</a>
                                         @else
                                         <span class="text-danger">Tidak ada bukti</span>
                                         @endif

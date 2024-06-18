@@ -15,7 +15,7 @@ class DashboardController extends Controller
         return view('dashboard', compact('barangs', 'testimonials'));
     }
 
-    public function storeTestimonial(Request $request)
+    public function TambahTestimoni(Request $request)
     {
         $request->validate([
             'content' => 'required|string',

@@ -36,7 +36,7 @@ class CartController extends Controller
         $barang->save();
         $keranjang->delete();
 
-        return redirect()->back()->with('success', 'Item deleted successfully');
+        return redirect()->back()->with('success', 'Barang telah berhasil di cancel');
     }
 
     public function add(Request $request, $id_barang)
