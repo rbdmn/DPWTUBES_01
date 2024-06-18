@@ -127,7 +127,7 @@
             <!-- Navbar End -->
 
 
-            <!-- Recent Sales Start -->
+            <!-- Booking Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
@@ -145,10 +145,11 @@
                                     <th scope="col">Status</th>
                                     <th scope="col">Pembayaran</th>
                                     <th scope="col">Aksi</th>
+                                    <th scope="col">Bukti Pembayaran</th> <!-- Tambahkan kolom ini -->
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($paidBookings as $booking)
+                                @foreach ($Status_Bookingnya as $booking)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $booking->user->name }}</td>
@@ -164,18 +165,18 @@
                                     <td>
                                         @if ($booking->status_submission == 'Pending')
                                         <span class="badge bg-warning text-dark">Pending</span>
-                                        @elseif ($booking->status_submission == 'Return Requested')
+                                        @elseif ($booking->status_submission == 'Permintaan Pengembalian')
                                         <span class="badge bg-warning text-dark">Permohonan kembalikan barang</span>
-                                        @elseif ($booking->status_submission == 'Returned')
+                                        @elseif ($booking->status_submission == 'Telah Dikembalikan')
                                         <span class="badge bg-success">Barang telah dikembalikan</span>
-                                        @elseif ($booking->status_submission == 'Confirmed')
+                                        @elseif ($booking->status_submission == 'Sah')
                                         <span class="badge bg-info">Barang telah diserahkan</span>
-                                        @elseif ($booking->status_submission == 'Rejected')
+                                        @elseif ($booking->status_submission == 'Ditolak')
                                         <span class="badge bg-danger">Ditolak</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($booking->status_payment == 'Paid')
+                                        @if ($booking->status_payment == 'Terbayar')
                                         <span class="badge bg-success">Sudah bayar</span>
                                         @else
                                         <span class="badge bg-warning text-dark">Belum bayar</span>
@@ -196,18 +197,27 @@
                                                 <button type="submit" class="btn btn-danger btn-sm">Tolak
                                                     Peminjaman</button>
                                             </form>
-                                            @elseif ($booking->status_submission == 'Return Requested')
+                                            @elseif ($booking->status_submission == 'Permintaan Pengembalian')
                                             <form action="{{ route('admin.confirmReturn', $booking->id_booking) }}"
                                                 method="POST">
                                                 @csrf
-                                                <button type="submit" class="btn btn-success btn-sm">Konfirm Pengembalian</button>
+                                                <button type="submit" class="btn btn-success btn-sm">Konfirm
+                                                    Pengembalian</button>
                                             </form>
-                                            @elseif ($booking->status_submission == 'Confirmed')
+                                            @elseif ($booking->status_submission == 'Sah')
                                             <span class="text-info">Barang telah diserahkan</span>
-                                            @elseif ($booking->status_submission =='Returned')
+                                            @elseif ($booking->status_submission =='Telah Dikembalikan')
                                             <span class="text-success">Barang telah dikembalikan</span>
                                             @endif
                                         </div>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url('bukti_pembayaran/' . $booking->bukti_pembayaran) }}"
+                                            target="_blank" class="btn btn-info btn-sm">Lihat Bukti Pembayaran</a>
+                                        @if ($booking->status_submission == 'Permintaan Pengembalian')
+                                        <a href="{{ route('bookings.MembuatFakturBuktiPengembalianDariUserKeAdmin', $booking->id_booking) }}"
+                                            class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -216,7 +226,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Recent Sales End -->
+            <!-- Booking End -->
 
 
 

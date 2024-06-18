@@ -20,7 +20,8 @@ class Booking extends Model
         'status_payment',
         'created_at',
         'updated_at',
-        'due_date'
+        'due_date',
+        'bukti_pembayaran',
     ];
 
     public function user()

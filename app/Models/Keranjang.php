@@ -27,7 +27,6 @@ class Keranjang extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    // Define the relationship with the items in the cart
     public function barang()
     {
         return $this->belongsTo(Barang::class, 'id_barang', 'id_barang');

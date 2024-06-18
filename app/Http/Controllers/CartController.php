@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
-    // Menampilkan halaman keranjang belanja pengguna
     public function index()
     {
         $cart = Keranjang::with('barang')
@@ -21,15 +20,25 @@ class CartController extends Controller
         return view('keranjang', compact('cart'));
     }
 
-    // Menghapus item dari keranjang belanja berdasarkan ID keranjang
     public function destroy($id_keranjang)
     {
         $keranjang = Keranjang::findOrFail($id_keranjang);
+        $barang = Barang::where('id_barang', $keranjang->id_barang)->firstOrFail();
+        
+        // Tambahkan jumlah barang kembali ke stok
+        $barang->stok += $keranjang->jumlah_barang_sewa;
+        
+        // Update status_ketersediaan jika stok bertambah
+        if ($barang->stok > 0) {
+            $barang->status_ketersediaan = true;
+        }
+        
+        $barang->save();
         $keranjang->delete();
+
         return redirect()->back()->with('success', 'Item deleted successfully');
     }
 
-    // Menambahkan item ke dalam keranjang belanja
     public function add(Request $request, $id_barang)
     {
         $request->validate([
@@ -39,18 +48,27 @@ class CartController extends Controller
         $user = Auth::user();
         $barang = Barang::where('id_barang', $id_barang)->firstOrFail();
 
+        if ($barang->stok < $request->quantity) {
+            return redirect()->back()->with('error', 'Stok tidak mencukupi untuk menambah ke keranjang!');
+        }
+
         $keranjang = new Keranjang();
         $keranjang->id_user = $user->id;
         $keranjang->id_barang = $barang->id_barang;
         $keranjang->nama_barang_sewa = $barang->nama_barang;
         $keranjang->jumlah_barang_sewa = $request->quantity;
 
+        $barang->stok -= $request->quantity;
+        if ($barang->stok == 0) {
+            $barang->status_ketersediaan = false;
+        }
+        $barang->save();
+
         $keranjang->save();
 
-        return redirect()->back()->with('success', 'Item added to cart successfully!');
+        return redirect()->back()->with('success', 'Barang telah ditambahkan ke keranjang!!');
     }
 
-    // Memperbarui durasi sewa barang dalam keranjang belanja
     public function update(Request $request, $id)
     {
         $keranjang = Keranjang::find($id);
@@ -60,6 +78,6 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('error', 'Failed to update durasi!');
+        return redirect()->back()->with('error', 'Gagal untuk mengubah durasi');
     }
 }

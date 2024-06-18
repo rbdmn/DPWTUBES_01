@@ -23,7 +23,20 @@ class BookingController extends Controller
     public function destroy($id_booking)
     {
         $booking = Booking::findOrFail($id_booking);
+        $keranjang = Keranjang::findOrFail($booking->id_keranjang);
+        $barang = Barang::where('id_barang', $keranjang->id_barang)->firstOrFail();
+        
+        // Tambahkan jumlah barang kembali ke stok
+        $barang->stok += $keranjang->jumlah_barang_sewa;  // Menggunakan jumlah barang sewa dari keranjang
+        
+        // Update status_ketersediaan jika stok bertambah
+        if ($barang->stok > 0) {
+            $barang->status_ketersediaan = true;
+        }
+        
+        $barang->save();
         $booking->delete();
+
         return redirect()->back()->with('success', 'Booking di cancel dengan sukses');
     }
 
@@ -52,7 +65,7 @@ class BookingController extends Controller
                     'nama_barang' => $keranjang->nama_barang_sewa,
                     'total_harga' => $total_harga,
                     'status_submission' => 'Pending',
-                    'status_payment' => 'Unpaid',
+                    'status_payment' => 'Belum dibayar',
                     'created_at' => $currentTimestamp,
                     'updated_at' => $currentTimestamp,
                     'due_date' => $dueDate,
@@ -68,24 +81,34 @@ class BookingController extends Controller
 
 
     // Memperbarui status pembayaran pemesanan
-    public function updatePaymentStatus($id_booking)
+    public function updatePaymentStatus(Request $request, $id_booking)
     {
+        $request->validate([
+            'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
         $booking = Booking::find($id_booking);
-        if ($booking && $booking->status_payment == 'Unpaid') {
-            $booking->status_payment = 'Paid';
+
+        if ($booking && $booking->status_payment == 'Belum dibayar') {
+            $imageName = time().'.'.$request->bukti_pembayaran->extension();
+            $request->bukti_pembayaran->move(public_path('bukti_pembayaran'), $imageName);
+
+            $booking->status_payment = 'Terbayar';
+            $booking->bukti_pembayaran = $imageName;
             $booking->save();
         }
 
         return redirect()->route('booking')->with('success', 'Pembayaran sukses!');
     }
 
+
     // Melakukan pengembalian barang
     public function returnItem($id_booking)
     {
         $booking = Booking::find($id_booking);
-        if ($booking && $booking->status_submission == 'Confirmed') {
+        if ($booking && $booking->status_submission == 'Sah') {
             // Logika untuk menangani tindakan pengembalian
-            $booking->status_submission = 'Returned';
+            $booking->status_submission = 'Telah Dikembalikan';
             $booking->save();
         }
 
@@ -96,8 +119,8 @@ class BookingController extends Controller
     public function requestReturn($id_booking)
     {
         $booking = Booking::find($id_booking);
-        if ($booking && $booking->status_submission == 'Confirmed') {
-            $booking->status_submission = 'Return Requested';
+        if ($booking && $booking->status_submission == 'Sah') {
+            $booking->status_submission = 'Permintaan Pengembalian';
             $booking->save();
         }
 
@@ -131,4 +154,19 @@ class BookingController extends Controller
         $pdf = Pdf::loadView('invoices.return', compact('booking'));
         return $pdf->download('Bukti_Pengembalian_' . $booking->user->name . '_.pdf');
     }
+
+    // Mengunduh bukti pengembalian barang
+    public function MembuatFakturBuktiPengembalianDariUserKeAdmin($id_booking)
+    {
+        $booking = Booking::with(['user', 'keranjang'])->find($id_booking);
+
+        // Pastikan booking ditemukan
+        if (!$booking) {
+            return redirect()->route('admin.home')->with('error', 'Booking tidak ditemukan.');
+        }
+
+        $pdf = PDF::loadView('invoices.buktipengembalianuserkeadmin', compact('booking'));
+        return $pdf->download('Bukti_Pengembalian_' . $booking->user->name . '_' . time() . '.pdf');
+    }
+
 }

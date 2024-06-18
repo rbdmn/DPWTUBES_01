@@ -45,15 +45,15 @@
             /* Yellow color for pending status */
         }
 
-        .badge-confirmed,
-        .badge-paid {
+        .badge-Sah,
+        .badge-Terbayar {
             background-color: #28a745;
-            /* Green color for confirmed and paid status */
+            /* Green color for Sah and Terbayar status */
         }
 
         .badge-return-requested {
             background-color: #17a2b8;
-            /* Light blue color for return requested status */
+            /* Light blue color for Permintaan Pengembalian status */
         }
 
         /* Action buttons */
@@ -147,7 +147,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($booking->status_payment == 'Unpaid')
+                                    @if ($booking->status_payment == 'Belum dibayar')
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#paymentModal"
                                         onclick="setBookingId({{ $booking->id_booking }})">Bayar</button>
@@ -157,26 +157,26 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
                                     </form>
-                                    @elseif ($booking->status_submission == 'Confirmed' && $booking->status_payment ==
-                                    'Paid')
+                                    @elseif ($booking->status_submission == 'Sah' && $booking->status_payment ==
+                                    'Terbayar')
                                     <form action="{{ route('bookings.requestReturn', $booking->id_booking) }}"
                                         method="POST" style="display:inline-block;">
                                         @csrf
                                         <button type="submit" class="btn btn-warning btn-sm">Permohonan kembalikan barang</button>
                                     </form>
-                                    @elseif ($booking->status_submission == 'Returned')
+                                    @elseif ($booking->status_submission == 'Telah Dikembalikan')
                                     <span class="text-success">Sudah dikembalikan</span>
                                     @else
                                     <span class="text-success">Sudah Bayar</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if (($booking->status_submission == 'Confirmed' && $booking->status_payment ==
-                                    'Paid'))
+                                    @if (($booking->status_submission == 'Sah' && $booking->status_payment ==
+                                    'Terbayar'))
                                     <a href="{{ route('bookings.MembuatFakturPengiriman', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Bukti Penyerahan</a>
-                                    @elseif ($booking->status_submission == 'Returned' && $booking->status_payment ==
-                                    'Paid')
+                                    @elseif ($booking->status_submission == 'Telah Dikembalikan' && $booking->status_payment ==
+                                    'Terbayar')
                                     <a href="{{ route('bookings.MembuatFakturPengembalian', $booking->id_booking) }}"
                                         class="btn btn-info btn-sm">Download Bukti Pengembalian</a>
                                     @endif
@@ -191,18 +191,22 @@
             </div>
 
             <!-- Modal -->
-            <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="paymentModalLabel">Verification Check</h5>
+                            <h5 class="modal-title" id="paymentModalLabel">Verifikasi Pembayaran</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Please choose a payment method:</p>
-                            <button type="button" class="btn btn-success" id="payWithCredit">Credit</button>
-                            <button type="button" class="btn btn-info" id="payWithQRIS">QRIS</button>
+                            <form id="paymentForm" action="{{ route('bookings.updatePaymentStatus', ':id') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="bukti_pembayaran" class="form-label">Upload Bukti Pembayaran</label>
+                                    <input type="file" class="form-control" id="bukti_pembayaran" name="bukti_pembayaran" required>
+                                </div>
+                                <button type="submit" class="btn btn-success">Kirim</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -213,39 +217,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let bookingId;
-
-    function setBookingId(id) {
-        bookingId = id;
-    }
-
-    document.getElementById('payWithCredit').addEventListener('click', function() {
-        submitPayment('credit');
-    });
-
-    document.getElementById('payWithQRIS').addEventListener('click', function() {
-        submitPayment('qris');
-    });
-
-    function submitPayment(method) {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '{{ route("bookings.updatePaymentStatus", ":id") }}'.replace(':id', bookingId);
-        form.style.display = 'none';
-
-        const token = document.createElement('input');
-        token.name = '_token';
-        token.value = '{{ csrf_token() }}';
-        form.appendChild(token);
-
-        const methodInput = document.createElement('input');
-        methodInput.name = 'payment_method';
-        methodInput.value = method;
-        form.appendChild(methodInput);
-
-        document.body.appendChild(form);
-        form.submit();
-    }
-        // JavaScript code
+    
+        function setBookingId(id) {
+            bookingId = id;
+            const form = document.getElementById('paymentForm');
+            form.action = form.action.replace(':id', id);
+        }
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.umd.min.js">
     </script>

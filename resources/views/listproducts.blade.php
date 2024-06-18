@@ -26,16 +26,18 @@
         .table thead th {
             vertical-align: middle;
             text-align: center;
-            background-color: rgba(71, 107, 69, 0.8); /* Grey foresty vibe color */
-            color: white; /* Text color for thead */
-            border: 1px solid black; /* Black border */
+            background-color: rgba(71, 107, 69, 0.8);
+            color: white;
+            border: 1px solid black;
         }
 
         .table tbody td {
+            background-color: rgba(60, 61, 60, 0.8);
             vertical-align: middle;
             text-align: center;
             padding: 10px;
-            border: 1px solid black; /* Black border */
+            border: 1px solid black;
+            color: white;
         }
 
         .table img {
@@ -60,7 +62,7 @@
     <x-app-layout>
 
         <div class="bg-darkgrey py-12"
-            style="background-image: url('startbootstrap-grayscale-gh-pages/assets/img/campsite.jpg'); background-color: rgba(0, 0, 0, 0.5); background-blend-mode: multiply; background-size: cover; background-position: center;">
+            style="background-image: url('images/darkforest.jpg'); background-blend-mode: multiply; background-size: cover; background-position: center;">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-forest-green overflow-hidden shadow-sm sm:rounded-lg">
                     @if (session('success'))
@@ -90,6 +92,7 @@
                                     <th scope="col">Harga Sewa Barang per hari</th>
                                     <th scope="col">Foto</th>
                                     <th scope="col">Kuantitas</th>
+                                    <th scope="col">Status Ketersediaan</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
@@ -99,16 +102,23 @@
                                     <td>{{ $item->nama_barang }}</td>
                                     <td>Rp {{ number_format($item->harga_barang, 2) }}</td>
                                     <td>
-                                        <img src="{{ asset('images/' . $item->foto_barang) }}" alt="Foto Barang"
-                                            style="width: 100px; height: auto;">
+                                        <img src="{{ asset('images/' . $item->foto_barang) }}" alt="Foto Barang" style="width: 100px; height: auto;">
                                     </td>
                                     <td>
+                                        @if($item->status_ketersediaan)
                                         <form action="{{ route('cart.add', $item->id_barang) }}" method="POST">
                                             @csrf
-                                            <input type="number" name="quantity" min="1" value="0"
-                                                class="form-control input-small">
-                                            <button type="submit" class="btn btn-primary btn-lg">Tambah</button>
+                                            <input type="number" name="quantity" min="1" value="1" class="form-control input-small">
+                                            <button type="submit" class="btn btn-primary btn-lg">+Keranjang</button>
                                         </form>
+                                        @else
+                                        <button class="btn btn-danger btn-lg" disabled>Stok Habis</button>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span class="{{ $item->status_ketersediaan ? 'text-success' : 'text-danger' }}">
+                                            {{ $item->status_ketersediaan ? 'Tersedia' : 'Tidak Tersedia' }}
+                                        </span>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -160,7 +170,8 @@
                                                     <h5 class="mb-0">Rp {{ number_format($item->harga_barang, 2) }}</h5>
                                                 </div>
                                                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                    <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                                    <a href="#!" class="text-danger"><i
+                                                            class="fas fa-trash fa-lg"></i></a>
                                                 </div>
                                             </div>
                                         </div>

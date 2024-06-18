@@ -26,7 +26,7 @@
 
         body {
             background-color: #d3e0dc;
-            background-image: url('{{ url('images/forest2.jpg') }}');
+            background-image: url('{{ url('images/forest3.jpg') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -71,92 +71,114 @@
             <div class="container h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col">
+                        @php
+                        $mark = 0; // Inisialisasi variabel mark
+                        @endphp
 
                         @forelse ($cart as $item)
-                            @if ($item->sudah_book == 0)
-                                @php
-                                    $itemTotal = ($item->barang->harga_barang * $item->jumlah_barang_sewa) * $item->durasi;
-                                @endphp
-                                <div class="card mb-4">
-                                    <div class="card-body p-4">
-
-                                        <div class="row align-items-center">
-                                            <div class="col-md-2">
-                                                <img src="{{ asset('images/' . $item->barang->foto_barang) }}" alt="Product Image" style="border: 10px solid rgba(71, 107, 69, 0.8); border-radius: 5px;">
-                                            </div>
-                                            <div class="col-md-2 d-flex justify-content-center">
-                                                <div>
-                                                    <p class="big text-muted mb-4 pb-2">Nama Barang</p>
-                                                    <p class="lead fw-normal mb-0">{{ $item->nama_barang_sewa }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 d-flex justify-content-center">
-                                                <div>
-                                                    <p class="big text-muted mb-4 pb-2">Jumlah Disewa</p>
-                                                    <p class="lead fw-normal mb-0">{{ $item->jumlah_barang_sewa }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 d-flex justify-content-center">
-                                                <div>
-                                                    <p class="big text-muted mb-4 pb-2">Harga per hari</p>
-                                                    <p class="lead fw-normal mb-0">Rp {{ number_format($item->barang->harga_barang, 2) }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 d-flex justify-content-center">
-                                                <div>
-                                                    <p class="big text-muted mb-4 pb-2" style="text-align: center">Durasi per hari</p>
-                                                    <!-- Input field for duration -->
-                                                    <form action="{{ route('cart.update', $item->id_keranjang) }}" method="POST" class="d-flex align-items-center justify-content-center">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown(); this.parentNode.submit()">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                        <input id="form1" min="0" name="durasi" value="{{ $item->durasi }}" type="number" class="form-control form-control-sm mx-2 input-small text-center" />
-                                                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp(); this.parentNode.submit()">
-                                                            <i class="fas fa-plus"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 d-flex justify-content-center">
-                                                <div>
-                                                    <p class="big text-muted mb-4 pb-2">Total Harga</p>
-                                                    <p class="lead fw-normal mb-0">Rp {{ number_format($itemTotal, 2) }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 d-flex justify-content-center mt-3">
-                                                <!-- Each product has its own submit button -->
-                                                <form action="{{ route('bookings.store', ['id_keranjang' => $item->id_keranjang]) }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-lg submit-btn me-3">Submit</button>
-                                                </form>
-                                                <!-- Delete action button -->
-                                                <form action="{{ route('cart.destroy', $item->id_keranjang) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="text-danger btn btn-link p-0 mt-3">
-                                                        <i class="fas fa-trash fa-lg"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                            
-                                            
+                        @if ($item->sudah_book == 0)
+                        @php
+                        $itemTotal = ($item->barang->harga_barang * $item->jumlah_barang_sewa) * $item->durasi;
+                        $mark = 1; // Update mark menjadi 1 karena ada item dalam keranjang
+                        @endphp
+                        <div class="card mb-4">
+                            <div class="card-body p-4">
+                                <!-- Konten kartu untuk setiap barang di keranjang -->
+                                <div class="row align-items-center">
+                                    <div class="col-md-2">
+                                        <img src="{{ asset('images/' . $item->barang->foto_barang) }}"
+                                            alt="Product Image"
+                                            style="border: 10px solid rgba(71, 107, 69, 0.8); border-radius: 5px;">
+                                    </div>
+                                    <div class="col-md-2 d-flex justify-content-center">
+                                        <div>
+                                            <p class="big text-muted mb-4 pb-2">Nama Barang</p>
+                                            <p class="lead fw-normal mb-0">{{ $item->nama_barang_sewa }}</p>
                                         </div>
-
+                                    </div>
+                                    <div class="col-md-2 d-flex justify-content-center">
+                                        <div>
+                                            <p class="big text-muted mb-4 pb-2">Jumlah Disewa</p>
+                                            <p class="lead fw-normal mb-0">{{ $item->jumlah_barang_sewa }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 d-flex justify-content-center">
+                                        <div>
+                                            <p class="big text-muted mb-4 pb-2">Harga per hari</p>
+                                            <p class="lead fw-normal mb-0">Rp {{
+                                                number_format($item->barang->harga_barang, 2) }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 d-flex justify-content-center">
+                                        <div>
+                                            <p class="big text-muted mb-4 pb-2" style="text-align: center">Durasi per
+                                                hari</p>
+                                            <!-- Input field for duration -->
+                                            <form action="{{ route('cart.update', $item->id_keranjang) }}" method="POST"
+                                                class="d-flex align-items-center justify-content-center">
+                                                @csrf
+                                                @method('PUT')
+                                                <button data-mdb-button-init data-mdb-ripple-init
+                                                    class="btn btn-link px-2"
+                                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown(); this.parentNode.submit()">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input id="form1" min="0" name="durasi" value="{{ $item->durasi }}"
+                                                    type="number"
+                                                    class="form-control form-control-sm mx-2 input-small text-center" />
+                                                <button data-mdb-button-init data-mdb-ripple-init
+                                                    class="btn btn-link px-2"
+                                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp(); this.parentNode.submit()">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 d-flex justify-content-center">
+                                        <div>
+                                            <p class="big text-muted mb-4 pb-2">Total Harga</p>
+                                            <p class="lead fw-normal mb-0">Rp {{ number_format($itemTotal, 2) }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 d-flex justify-content-center mt-3">
+                                        <!-- Each product has its own submit button -->
+                                        <form
+                                            action="{{ route('bookings.store', ['id_keranjang' => $item->id_keranjang]) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-lg submit-btn me-3">Submit</button>
+                                        </form>
+                                        <!-- Delete action button -->
+                                        <form action="{{ route('cart.destroy', $item->id_keranjang) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-danger btn btn-link p-0 mt-3">
+                                                <i class="fas fa-trash fa-lg"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
-                            @endif
-                        @empty
-                            <div class="card mb-4">
-                                <div class="card-body p-4 text-center">
-                                    <p class="lead fw-normal mb-2">Keranjang Anda kosong.</p>
-                                </div>
                             </div>
+                        </div>
+                        @endif
+                        @empty
+                        @php
+                        $mark = 0; // Update mark menjadi 0 karena keranjang kosong
+                        @endphp
+                        <div class="card mb-4">
+                            <div class="card-body p-4 text-center">
+                                <p class="lead fw-normal mb-2">Keranjang Anda kosong.</p>
+                            </div>
+                        </div>
                         @endforelse
 
+                        @if ($mark === 0)
+                        <div class="card mb-4">
+                            <div class="card-body p-4 text-center">
+                                <p class="lead fw-normal mb-2">Keranjang Anda kosong.</p>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

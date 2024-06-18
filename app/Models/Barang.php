@@ -10,10 +10,13 @@ class Barang extends Model
     protected $primaryKey = 'id_barang';
     
     protected $fillable = [
-        'id_barang',
         'nama_barang',
         'harga_barang',
         'foto_barang',
+        'stok',
+        'status_ketersediaan',
+        'created_at',
+        'updated_at',
     ];
 
     // Define the relationship with the cart (keranjang)
