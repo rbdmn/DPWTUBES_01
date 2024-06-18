@@ -169,4 +169,74 @@ class BookingController extends Controller
         return $pdf->download('Bukti_Pengembalian_' . $booking->user->name . '_' . time() . '.pdf');
     }
 
+    public function showPaymentForm($id_keranjang)
+    {
+        $keranjang = Keranjang::where('id_keranjang', $id_keranjang)
+            ->where('id_user', Auth::id())
+            ->where('sudah_book', false)
+            ->first();
+
+        if ($keranjang) {
+            $barang = Barang::find($keranjang->id_barang);
+            if ($barang) {
+                $total_harga = ($barang->harga_barang * $keranjang->jumlah_barang_sewa) * $keranjang->durasi;
+                return view('payment', compact('keranjang', 'total_harga'));
+            }
+        }
+
+        return redirect()->back()->with('error', 'Keranjang tidak ditemukan atau sudah dibooking.');
+    }
+
+    public function processPayment(Request $request)
+    {
+        $request->validate([
+            'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'id_keranjang' => 'required|exists:keranjangs,id_keranjang',
+            'nama_barang_sewa' => 'required',
+            'jumlah_barang_sewa' => 'required|numeric|min:1',
+            'durasi' => 'required|numeric|min:1',
+            'total_harga' => 'required|numeric|min:0',
+        ]);
+
+        $id_keranjang = $request->input('id_keranjang');
+        $keranjang = Keranjang::where('id_keranjang', $id_keranjang)
+            ->where('id_user', Auth::id())
+            ->where('sudah_book', false)
+            ->first();
+
+        if ($keranjang) {
+            $imageName = time() . '.' . $request->bukti_pembayaran->extension();
+            $request->bukti_pembayaran->move(public_path('bukti_pembayaran'), $imageName);
+
+            $keranjang->update([
+                'sudah_book' => true,
+            ]);
+
+            // Menyimpan data pemesanan ke tabel bookings
+            $barang = Barang::find($keranjang->id_barang);
+            if ($barang) {
+                $total_harga = ($barang->harga_barang * $keranjang->jumlah_barang_sewa) * $keranjang->durasi;
+                $currentTimestamp = now();
+                $dueDate = $currentTimestamp->copy()->addDays($keranjang->durasi);
+
+                Booking::create([
+                    'id_user' => Auth::id(),
+                    'id_keranjang' => $keranjang->id_keranjang,
+                    'nama_barang' => $keranjang->nama_barang_sewa,
+                    'total_harga' => $total_harga,
+                    'status_submission' => 'Pending',
+                    'status_payment' => 'Terbayar',
+                    'created_at' => $currentTimestamp,
+                    'updated_at' => $currentTimestamp,
+                    'due_date' => $dueDate,
+                    'bukti_pembayaran' => $imageName,
+                ]);
+            }
+
+            return redirect()->route('booking')->with('success', 'Pembayaran sukses!');
+        }
+
+        return redirect()->back()->with('error', 'Keranjang tidak ditemukan atau sudah dibooking.');
+    }
+
 }

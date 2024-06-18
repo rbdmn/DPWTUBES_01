@@ -158,17 +158,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($booking->status_payment == 'Belum dibayar')
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#paymentModal"
-                                        onclick="setBookingId({{ $booking->id_booking }})">Bayar</button>
-                                    <form action="{{ route('booking.destroy', $booking->id_booking) }}" method="POST"
-                                        style="display:inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
-                                    </form>
-                                    @elseif ($booking->status_submission == 'Sah' && $booking->status_payment ==
+                                    @if ($booking->status_submission == 'Sah' && $booking->status_payment ==
                                     'Terbayar')
                                     <form action="{{ route('bookings.requestReturn', $booking->id_booking) }}"
                                         method="POST" style="display:inline-block;">

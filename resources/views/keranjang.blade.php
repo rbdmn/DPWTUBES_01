@@ -142,12 +142,7 @@
                                     </div>
                                     <div class="col-md-12 d-flex justify-content-center mt-3">
                                         <!-- Each product has its own submit button -->
-                                        <form
-                                            action="{{ route('bookings.store', ['id_keranjang' => $item->id_keranjang]) }}"
-                                            method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-lg submit-btn me-3">Submit</button>
-                                        </form>
+                                        <a href="{{ route('payment', ['id_keranjang' => $item->id_keranjang]) }}" class="btn btn-lg submit-btn me-3">Bayar</a>
                                         <!-- Delete action button -->
                                         <form action="{{ route('cart.destroy', $item->id_keranjang) }}" method="POST">
                                             @csrf
